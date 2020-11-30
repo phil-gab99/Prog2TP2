@@ -1,9 +1,9 @@
 /**
-* @author Philippe Gabriel
-* @version 1.0 2020-12-07
-*
 * The class Word defines a word node as well as its own linked list of
 * documents and the word's frequency within it
+*
+* @author Philippe Gabriel
+* @version 1.0 2020-12-07
 ***/
 
 public class Word {
@@ -22,5 +22,20 @@ public class Word {
     public Word(String name) {
 
         this.name = name;
+    }
+
+    public String getName() {
+
+        return name;
+    }
+
+    public Word getNextWord() {
+
+        return nextWord;
+    }
+
+    public void setNextWord(Word next) {
+
+        nextWord = next;
     }
 }

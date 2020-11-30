@@ -1,14 +1,14 @@
 /**
-* @author Philippe Gabriel
-* @version 1.0 2020-12-07
-*
 * The class WordStructure defines the linked list format structure for the
 * documents that figure on the indexation list
+*
+* @author Philippe Gabriel
+* @version 1.0 2020-12-07
 ***/
 
 public class WordStructure {
 
-    private Word word;                   //Word within the document
+    private String word;                 //Word within the document
     private int frequency;               //Appearances of word in document
     private WordStructure nextStructure; //Structure for the next distinct word
 
@@ -20,10 +20,22 @@ public class WordStructure {
     * @param frequency Integer indicating word appearance
     ***/
 
-    public WordStructure(Word word, int frequency) {
+    public WordStructure(String word, int frequency) {
 
         this.word = word;
         this.frequency = frequency;
+    }
+
+    public WordStructure(String word, int frequency, WordStructure nextStructure) {
+
+        this.word = word;
+        this.frequency = frequency;
+        this.nextStructure = nextStructure;
+    }
+
+    public String getWord() {
+
+        return word;
     }
 
     /**

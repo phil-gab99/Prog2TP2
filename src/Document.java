@@ -1,22 +1,19 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.HashMap;
 
 /**
-* @author Philippe Gabriel
-* @version 1.0 2020-12-07
-*
 * The class Document defines a document node as well as its own linked list of
 * words and their frequency
+*
+* @author Philippe Gabriel
+* @version 1.0 2020-12-07
 ***/
 
 class Document {
 
     private String name;                 //Document file path
-    private WordStructure headStructure; //Document head structure
-    private WordStructure lastStructure; //Document last structure
     private Document nextDocument;       //Document following the current one
+    private WordStructure headStructure; //Document head structure
 
     /**
     * The constructor method Document creates a new document with the specified
@@ -28,6 +25,18 @@ class Document {
     public Document(String name) {
 
         this.name = name;
+    }
+
+    /**
+    * The getter method getName grants access to the name path of the current
+    * document
+    *
+    * @return name String indicating document file path
+    ***/
+
+    public String getName() {
+
+        return name;
     }
 
     /**
@@ -55,32 +64,42 @@ class Document {
     }
 
     /**
-    * The setter method setWordStructure analyzes the text within the current
-    * document and arranges its word structure coupled with its frequency
+    * The setter method setWordStructure sets the current word structure list
+    * for a given document
+    *
+    * @param documentTokens HashMap containing each word within document and
+    * its frequency
     ***/
 
-    public void setWordStructure() {
-
-        Tokenizer.readFile(name); //Reading file
-        Tokenizer.createTokens(); //Creating tokens
-
-        //Acquiring unique tokens and their frequency
-        HashMap<String, Integer> documentTokens = Tokenizer.getUniqueTokens();
+    public void setWordStructure(HashMap<String, Integer> documentTokens) {
 
         //Building the document's word structure based on unique tokens
         for (Map.Entry<String, Integer> entry : documentTokens.entrySet()) {
 
-            WordStructure temp = new WordStructure(new Word(entry.getKey()), entry.getValue());
-
-            if (headStructure == null) { //Checking if first word
-
-                headStructure = temp;
-                lastStructure = temp;
-            } else {                     //Adding onto end of list
-
-                lastStructure.setNextStructure(temp);
-                lastStructure = lastStructure.getNextStructure();
-            }
+            addSortedStructure(entry.getKey(), entry.getValue());
         }
+    }
+
+    public void addSortedStructure(String word, int frequency) {
+
+        WordStructure node = headStructure;
+
+        if (headStructure == null) {
+
+            headStructure = new WordStructure(word, frequency);
+            return;
+        }
+
+        while (headStructure.
+        getNextStructure().getWord().compareToIgnoreCase(word) < 0
+        && headStructure.getNextStructure() != null) {
+
+            headStructure = headStructure.getNextStructure();
+        }
+
+        headStructure.setNextStructure(
+        new WordStructure(word, frequency, headStructure.getNextStructure()));
+
+        headStructure = node;
     }
 }

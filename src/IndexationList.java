@@ -1,9 +1,12 @@
+import java.io.IOException;
+import java.util.HashMap;
+
 /**
-* @author Philippe Gabriel
-* @version 1.0 2020-12-07
-*
 * The class IndexationList defines the fields and methods required for a linked
 * list of documents
+*
+* @author Philippe Gabriel
+* @version 1.0 2020-12-07
 ***/
 
 public class IndexationList {
@@ -16,9 +19,10 @@ public class IndexationList {
     * and then initiates the document analysis
     *
     * @param name String indicating document file path
+    * @param reverseList ReverseIndexationList reference to update paired list
     ***/
 
-    void addDocument(String name) {
+    void addDocument(String name, ReverseIndexationList reverseList) {
 
         Document temp = new Document(name);
 
@@ -32,6 +36,21 @@ public class IndexationList {
             lastDocument = lastDocument.getNextDocument();
         }
 
-        temp.setWordStructure();    //Analyzing document
+        try {
+
+            Tokenizer.readFile(temp.getName());
+        } catch(IOException e) {
+
+            System.out.println("Stuff");
+        }
+
+        Tokenizer.createTokens(); //Creating tokens
+
+        //Acquiring unique tokens and their frequency
+        HashMap<String, Integer> documentTokens = Tokenizer.getUniqueTokens();
+
+        temp.setWordStructure(documentTokens); //Analyzing document
+
+        reverseList.addWords(documentTokens, temp.getName());
     }
 }
