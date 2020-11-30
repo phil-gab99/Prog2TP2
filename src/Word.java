@@ -9,8 +9,9 @@
 public class Word {
 
     private String name;                     //String labelling word
-    private DocumentStructure headStructure; //Word head structure
     private Word nextWord;                   //Word following the current one
+    private DocumentStructure headStructure; //Word head structure
+    private DocumentStructure lastStructure; //Word last structure
 
     /**
     * The constructor method Word creates a new word with the specified
@@ -22,6 +23,19 @@ public class Word {
     public Word(String name) {
 
         this.name = name;
+    }
+
+    public Word(String name, Word nextWord) {
+
+        this.name = name;
+        this.nextWord = nextWord;
+    }
+
+    public Word(String name, DocumentStructure structure) {
+
+        this.name = name;
+        this.headStructure = structure;
+        this.lastStructure = structure;
     }
 
     public String getName() {
@@ -37,5 +51,20 @@ public class Word {
     public void setNextWord(Word next) {
 
         nextWord = next;
+    }
+
+    public void addDocumentStructure(String source, int frequency) {
+
+        DocumentStructure temp = new DocumentStructure(source, frequency);
+
+        if (headStructure == null) { //Checking if first document
+
+            headStructure = temp;
+            lastStructure = temp;
+        } else {                     //Adding onto end of list
+
+            lastStructure.setNextStructure(temp);
+            lastStructure = lastStructure.getNextStructure();
+        }
     }
 }

@@ -13,21 +13,17 @@ public class ReverseIndexationList {
 
     private Word headWord; //Head word of list
 
-    public void addWords(HashMap<String, Integer> documentTokens) {
+    public void addWords(HashMap<String, Integer> documentTokens, String source) {
 
         for (Map.Entry<String, Integer> entry : documentTokens.entrySet()) {
 
-            Word temp = new Word(entry.getKey());
+            if (contains(entry.getKey())) {
 
-            if (headWord == null) {
-
-                headWord = temp;
-            } else if (contains(temp)) {
-
-                temp = getListWord(temp.getName());
+                Word temp = getListWord(entry.getKey());
+                temp.addDocumentStructure(source, entry.getValue());
             } else {
 
-                //Add word at end of list and give it new DocumentStructure
+                addSorted(entry.getKey(), source, entry.getValue());
             }
         }
     }
@@ -36,18 +32,18 @@ public class ReverseIndexationList {
     * The method contains determines whether a word is already within the
     * current linked list or not
     *
-    * @param word Word for which search is undertaken
+    * @param word String for which search is undertaken
     * @return haveWord Boolean indicating if given word is in the list or not
     ***/
 
-    private boolean contains(Word word) {
+    private boolean contains(String word) {
 
         boolean haveWord = false;
         Word index = headWord;
 
         while (index != null) {
 
-            if (word.getName().equals(index.getName())) {
+            if (word.equalsIgnoreCase(index.getName())) {
 
                 haveWord = true;
                 break;
@@ -86,23 +82,23 @@ public class ReverseIndexationList {
 
     public void addSorted(String name, String source, int frequency) {
 
-        // WordStructure node = headStructure;
-        //
-        // if (headStructure == null) {
-        //
-        //     headStructure = new WordStructure(word, frequency);
-        //     return;
-        // }
-        //
-        // while (headWord.getName().compareToIgnoreCase(word) < 0
-        // && headStructure.getNextStructure() != null) {
-        //
-        //     headStructure = headStructure.getNextStructure();
-        // }
-        //
-        // headStructure.setNextStructure(
-        // new WordStructure(word, frequency, headStructure.getNextStructure()));
-        //
-        // headStructure = node;
+        Word node = headWord;
+
+        if (headWord == null) {
+
+            headWord = new Word(name, new DocumentStructure(source, frequency));
+            return;
+        }
+
+        while (headWord.getNextWord().getName().compareToIgnoreCase(name) < 0
+        && headWord.getNextWord() != null) {
+
+            headWord = headWord.getNextWord();
+        }
+
+        headWord.setNextWord(new Word(name, headWord.getNextWord()));
+        headWord.getNextWord().addDocumentStructure(source, frequency);
+
+        headWord = node;
     }
 }
