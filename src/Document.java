@@ -1,5 +1,4 @@
-import java.util.Map;
-import java.util.HashMap;
+import java.util.ArrayList;
 
 /**
 * The class Document defines a document node as well as its own linked list of
@@ -12,6 +11,7 @@ import java.util.HashMap;
 class Document {
 
     private String name;                 //Document file path
+    private String text;                 //Text within document
     private Document nextDocument;       //Document following the current one
     private WordStructure headStructure; //Document head structure
 
@@ -39,6 +39,11 @@ class Document {
         return name;
     }
 
+    public void setText(String text) {
+
+        this.text = text;
+    }
+
     /**
     * The getter method getNextDocument grants access to the next document of
     * the current document
@@ -63,6 +68,11 @@ class Document {
         nextDocument = next;
     }
 
+    public WordStructure getHeadStructure() {
+
+        return headStructure;
+    }
+
     /**
     * The setter method setWordStructure sets the current word structure list
     * for a given document
@@ -71,18 +81,16 @@ class Document {
     * its frequency
     ***/
 
-    public void setWordStructure(HashMap<String, Integer> documentTokens) {
+    public void setWordStructure(ArrayList<WordFrequency> documentTokens) {
 
         //Building the document's word structure based on unique tokens
-        for (Map.Entry<String, Integer> entry : documentTokens.entrySet()) {
+        for (WordFrequency entry : documentTokens) {
 
-            addSortedStructure(entry.getKey(), entry.getValue());
+            addSortedStructure(entry.getWord(), entry.getFrequency());
         }
     }
 
     public void addSortedStructure(String word, int frequency) {
-
-        WordStructure node = headStructure;
 
         if (headStructure == null) {
 
@@ -90,16 +98,33 @@ class Document {
             return;
         }
 
-        while (headStructure.
-        getNextStructure().getWord().compareToIgnoreCase(word) < 0
-        && headStructure.getNextStructure() != null) {
+        if (headStructure.getWord().compareToIgnoreCase(word) > 0) {
+
+            headStructure = new WordStructure(word, frequency, headStructure);
+            return;
+        }
+
+        WordStructure node = headStructure;
+
+        while (headStructure.getNextStructure() != null && headStructure.
+        getNextStructure().getWord().compareToIgnoreCase(word) < 0) {
 
             headStructure = headStructure.getNextStructure();
         }
 
         headStructure.setNextStructure(
         new WordStructure(word, frequency, headStructure.getNextStructure()));
-
         headStructure = node;
+    }
+
+    public void printList(WordStructure node) {
+
+        System.out.println(text);
+
+        while (node != null) {
+
+            System.out.println(node.getWord() + " - " + node.getFrequency());
+            node = node.getNextStructure();
+        }
     }
 }

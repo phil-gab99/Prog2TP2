@@ -38,6 +38,11 @@ public class WordStructure {
         return word;
     }
 
+    public int getFrequency() {
+
+        return frequency;
+    }
+
     /**
     * The getter method getNextStructure grants access to the next word
     * structure of the current word structure

@@ -10,6 +10,16 @@ public class DocumentStructure {
         this.frequency = frequency;
     }
 
+    public String getDocument() {
+
+        return document;
+    }
+
+    public int getFrequency() {
+
+        return frequency;
+    }
+
     public DocumentStructure getNextStructure() {
 
         return nextStructure;

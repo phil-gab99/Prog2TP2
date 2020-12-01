@@ -1,5 +1,4 @@
-import java.util.Map;
-import java.util.HashMap;
+import java.util.ArrayList;
 
 /**
 * The class ReverseIndexationList defines the fields and methods required for a
@@ -13,17 +12,23 @@ public class ReverseIndexationList {
 
     private Word headWord; //Head word of list
 
-    public void addWords(HashMap<String, Integer> documentTokens, String source) {
+    public Word getHeadWord() {
 
-        for (Map.Entry<String, Integer> entry : documentTokens.entrySet()) {
+        return headWord;
+    }
 
-            if (contains(entry.getKey())) {
+    public void addWords(ArrayList<WordFrequency> documentTokens,
+    String source) {
 
-                Word temp = getListWord(entry.getKey());
-                temp.addDocumentStructure(source, entry.getValue());
+        for (WordFrequency entry : documentTokens) {
+
+            if (contains(entry.getWord())) {
+
+                Word temp = getListWord(entry.getWord());
+                temp.addDocumentStructure(source, entry.getFrequency());
             } else {
 
-                addSorted(entry.getKey(), source, entry.getValue());
+                addSorted(entry.getWord(), source, entry.getFrequency());
             }
         }
     }
@@ -82,23 +87,42 @@ public class ReverseIndexationList {
 
     public void addSorted(String name, String source, int frequency) {
 
-        Word node = headWord;
-
         if (headWord == null) {
 
             headWord = new Word(name, new DocumentStructure(source, frequency));
             return;
         }
 
-        while (headWord.getNextWord().getName().compareToIgnoreCase(name) < 0
-        && headWord.getNextWord() != null) {
+        if (headWord.getName().compareToIgnoreCase(name) > 0) {
+
+            headWord = new Word(name, headWord, new DocumentStructure(source, frequency));
+            return;
+        }
+
+        Word node = headWord;
+
+        while (headWord.getNextWord() != null
+        && headWord.getNextWord().getName().compareToIgnoreCase(name) < 0) {
 
             headWord = headWord.getNextWord();
         }
 
-        headWord.setNextWord(new Word(name, headWord.getNextWord()));
-        headWord.getNextWord().addDocumentStructure(source, frequency);
+        headWord.setNextWord(new Word(name, headWord.getNextWord(), new DocumentStructure(source, frequency)));
 
         headWord = node;
+    }
+
+    public void printList(Word node) {
+
+        while (node != null) {
+
+            // System.out.print(node.getName() " - " );
+
+            System.out.println(node.getName());
+            node.printList(node.getHeadStructure());
+            System.out.println();
+            node = node.getNextWord();
+        }
+        // System.out.println("null");
     }
 }

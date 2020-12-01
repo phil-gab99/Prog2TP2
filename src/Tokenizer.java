@@ -1,13 +1,13 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.ArrayList;
 
 public class Tokenizer {
 
     private static String text;
     private static String[] textTokens;
-    private static HashMap<String, Integer> uniqueTokens;
+    private static ArrayList<WordFrequency> uniqueTokens;
 
     public static void readFile(String path) throws IOException {
 
@@ -29,18 +29,37 @@ public class Tokenizer {
         text = text.replaceAll("[^A-z0-9]", " ");
         textTokens = text.split(" +");
 
-        uniqueTokens = new HashMap<String, Integer>();
+        uniqueTokens = new ArrayList<WordFrequency>();
 
         for (String w : textTokens) {
 
-            if (uniqueTokens.containsKey(w)) {
+            int wordIndex = contains(w, uniqueTokens);
 
-                uniqueTokens.put(w, uniqueTokens.get(w) + 1);
+            if (wordIndex != -1) {
+
+                uniqueTokens.set(wordIndex, new WordFrequency(w, uniqueTokens.get(wordIndex).getFrequency() + 1));
             } else {
 
-                uniqueTokens.put(w, 1);
+                uniqueTokens.add(new WordFrequency(w, 1));
             }
         }
+    }
+
+    public static int contains(String word,
+    ArrayList<WordFrequency> tokens) {
+
+        int index = -1;
+
+        for (WordFrequency entry : tokens) {
+
+            if (entry.getWord().equalsIgnoreCase(word)) {
+
+                index = tokens.indexOf(entry);
+                break;
+            }
+        }
+
+        return index;
     }
 
     public static String getText() {
@@ -48,12 +67,7 @@ public class Tokenizer {
         return text;
     }
 
-    public static String[] getTextTokens() {
-
-        return textTokens;
-    }
-
-    public static HashMap<String, Integer> getUniqueTokens() {
+    public static ArrayList<WordFrequency> getUniqueTokens() {
 
         return uniqueTokens;
     }

@@ -38,6 +38,14 @@ public class Word {
         this.lastStructure = structure;
     }
 
+    public Word(String name, Word nextWord , DocumentStructure structure) {
+
+        this.name = name;
+        this.nextWord = nextWord;
+        this.headStructure = structure;
+        this.lastStructure = structure;
+    }
+
     public String getName() {
 
         return name;
@@ -46,6 +54,11 @@ public class Word {
     public Word getNextWord() {
 
         return nextWord;
+    }
+
+    public DocumentStructure getHeadStructure() {
+
+        return headStructure;
     }
 
     public void setNextWord(Word next) {
@@ -65,6 +78,15 @@ public class Word {
 
             lastStructure.setNextStructure(temp);
             lastStructure = lastStructure.getNextStructure();
+        }
+    }
+
+    public void printList(DocumentStructure node) {
+
+        while (node != null) {
+
+            System.out.println(node.getDocument() + " - " + node.getFrequency());
+            node = node.getNextStructure();
         }
     }
 }

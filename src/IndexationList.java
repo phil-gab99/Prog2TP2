@@ -1,5 +1,5 @@
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.ArrayList;;
 
 /**
 * The class IndexationList defines the fields and methods required for a linked
@@ -14,6 +14,11 @@ public class IndexationList {
     private Document headDocument; //Head document of list
     private Document lastDocument; //Last document of list
 
+    public Document getHeadDocument() {
+
+        return headDocument;
+    }
+
     /**
     * The method addDocument adds a new document at the end of the linked list
     * and then initiates the document analysis
@@ -22,7 +27,7 @@ public class IndexationList {
     * @param reverseList ReverseIndexationList reference to update paired list
     ***/
 
-    void addDocument(String name, ReverseIndexationList reverseList) {
+    public void addDocument(String name, ReverseIndexationList reverseList) {
 
         Document temp = new Document(name);
 
@@ -44,13 +49,27 @@ public class IndexationList {
             System.out.println("Stuff");
         }
 
+        temp.setText(Tokenizer.getText());
         Tokenizer.createTokens(); //Creating tokens
 
         //Acquiring unique tokens and their frequency
-        HashMap<String, Integer> documentTokens = Tokenizer.getUniqueTokens();
+        ArrayList<WordFrequency> documentTokens = Tokenizer.getUniqueTokens();
 
         temp.setWordStructure(documentTokens); //Analyzing document
 
         reverseList.addWords(documentTokens, temp.getName());
+    }
+
+    public void printList(Document node) {
+
+        while (node != null) {
+
+            System.out.println(node.getName());
+            System.out.println();
+            node.printList(node.getHeadStructure());
+            node = node.getNextDocument();
+        }
+
+        // System.out.println("null");
     }
 }
