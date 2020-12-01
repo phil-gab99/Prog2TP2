@@ -1,3 +1,5 @@
+package wordlist;
+
 /**
 * The class DocumentStructure defines the linked list format structure for the
 * words that figure on the reversed indexation list

@@ -1,4 +1,7 @@
+package wordlist;
+
 import java.util.ArrayList;
+import tools.WordFrequency;
 
 /**
 * The class ReverseIndexationList defines the fields and methods required for a

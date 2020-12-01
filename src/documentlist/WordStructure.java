@@ -1,3 +1,5 @@
+package documentlist;
+
 /**
 * The class WordStructure defines the linked list format structure for the
 * documents that figure on the indexation list

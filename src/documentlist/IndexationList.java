@@ -1,5 +1,9 @@
+package documentlist;
+
 import java.io.IOException;
-import java.util.ArrayList;;
+import java.util.ArrayList;
+import wordlist.ReverseIndexationList;
+import tools.*;
 
 /**
 * The class IndexationList defines the fields and methods required for a linked

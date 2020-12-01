@@ -1,3 +1,5 @@
+package tools;
+
 /**
 * The class WordFrequency pairs with each word a frequency counting its
 * appearances within some block of text

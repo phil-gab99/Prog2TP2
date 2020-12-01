@@ -1,4 +1,7 @@
+package documentlist;
+
 import java.util.ArrayList;
+import tools.WordFrequency;
 
 /**
 * The class Document defines a document node as well as its own linked list of

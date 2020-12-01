@@ -1,3 +1,5 @@
+package wordlist;
+
 /**
 * The class Word defines a word node as well as its own linked list of
 * documents and the word's frequency within it
