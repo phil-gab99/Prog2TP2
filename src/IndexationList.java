@@ -14,11 +14,6 @@ public class IndexationList {
     private Document headDocument; //Head document of list
     private Document lastDocument; //Last document of list
 
-    public Document getHeadDocument() {
-
-        return headDocument;
-    }
-
     /**
     * The method addDocument adds a new document at the end of the linked list
     * and then initiates the document analysis
@@ -35,41 +30,48 @@ public class IndexationList {
 
             headDocument = temp;
             lastDocument = temp;
-        } else {                    //Adding onto end of list
+        } else { //Appends onto list
 
             lastDocument.setNextDocument(temp);
             lastDocument = lastDocument.getNextDocument();
         }
 
+        Tokenizer tokens; //Tokenizer object for analyzing document contents
+
         try {
 
-            Tokenizer.readFile(temp.getName());
+            tokens = new Tokenizer(temp.getName());
         } catch(IOException e) {
 
-            System.out.println("Stuff");
+            System.out.println("Please specify a valid file path");
+            return;
         }
 
-        temp.setText(Tokenizer.getText());
-        Tokenizer.createTokens(); //Creating tokens
+        temp.setText(tokens.getText());
 
         //Acquiring unique tokens and their frequency
-        ArrayList<WordFrequency> documentTokens = Tokenizer.getUniqueTokens();
+        ArrayList<WordFrequency> documentTokens = tokens.getUniqueTokens();
 
         temp.setWordStructure(documentTokens); //Analyzing document
 
+        //Updating reversed indexation list
         reverseList.addWords(documentTokens, temp.getName());
     }
 
-    public void printList(Document node) {
+    /**
+    * The method printList prints the current list to the user
+    ***/
 
-        while (node != null) {
+    public void printList() {
 
-            System.out.println(node.getName());
-            System.out.println();
-            node.printList(node.getHeadStructure());
-            node = node.getNextDocument();
+        Document node = headDocument;
+
+        while (headDocument != null) {
+
+            headDocument.printList();
+            headDocument = headDocument.getNextDocument();
         }
 
-        // System.out.println("null");
+        headDocument = node;
     }
 }

@@ -8,7 +8,7 @@
 
 public class Word {
 
-    private String name;                     //String labelling word
+    private String label;                    //String labelling word
     private Word nextWord;                   //Word following the current one
     private DocumentStructure headStructure; //Word head structure
     private DocumentStructure lastStructure; //Word last structure
@@ -17,54 +17,103 @@ public class Word {
     * The constructor method Word creates a new word with the specified
     * associated label
     *
-    * @param name String labelling word
+    * @param label String labelling word
     ***/
 
-    public Word(String name) {
+    public Word(String label) {
 
-        this.name = name;
+        this.label = label;
     }
 
-    public Word(String name, Word nextWord) {
+    /**
+    * The constructor method Word creates a new word with the specified
+    * associated label and indicates the word following it
+    *
+    * @param label String labelling word
+    * @param nextWord Word following the current one
+    ***/
 
-        this.name = name;
+    public Word(String label, Word nextWord) {
+
+        this.label = label;
         this.nextWord = nextWord;
     }
 
-    public Word(String name, DocumentStructure structure) {
+    /**
+    * The constructor method Word creates a new word with the specified
+    * associated label and describes its first document structure
+    *
+    * @param label String labelling word
+    * @param structure First DocumentStructure of Word
+    ***/
 
-        this.name = name;
+    public Word(String label, DocumentStructure structure) {
+
+        this.label = label;
         this.headStructure = structure;
         this.lastStructure = structure;
     }
 
-    public Word(String name, Word nextWord , DocumentStructure structure) {
+    /**
+    * The constructor method Word creates a new word with the specified
+    * associated label, indicates the word following it and describes its first
+    * document structure
+    *
+    * @param label String labelling word
+    * @param nextWord Word following the current one
+    * @param structure First DocumentStructure of Word
+    ***/
 
-        this.name = name;
+    public Word(String label, Word nextWord, DocumentStructure structure) {
+
+        this.label = label;
         this.nextWord = nextWord;
         this.headStructure = structure;
         this.lastStructure = structure;
     }
 
-    public String getName() {
+    /**
+    * The getter method getLabel grants access to the current word's String
+    * label
+    *
+    * @return label String labelling word
+    ***/
 
-        return name;
+    public String getLabel() {
+
+        return label;
     }
+
+    /**
+    * The getter method getNextWord grants access to the current word's next
+    * word following it
+    *
+    * @return nextWord Word following the current one
+    ***/
 
     public Word getNextWord() {
 
         return nextWord;
     }
 
-    public DocumentStructure getHeadStructure() {
+    /**
+    * The setter method setNextWord sets the word that follows the current one
+    *
+    * @param nextWord Word following the current one
+    ***/
 
-        return headStructure;
+    public void setNextWord(Word nextWord) {
+
+        this.nextWord = nextWord;
     }
 
-    public void setNextWord(Word next) {
-
-        nextWord = next;
-    }
+    /**
+    * The method addDocumentStructure adds an additional document structure to
+    * the current word's list of document structures
+    *
+    * @param source String file path of source document
+    * @param frequency Integer indicating occurences of word within document
+    ***/
 
     public void addDocumentStructure(String source, int frequency) {
 
@@ -74,19 +123,36 @@ public class Word {
 
             headStructure = temp;
             lastStructure = temp;
-        } else {                     //Adding onto end of list
+        } else { //Appends onto list
 
             lastStructure.setNextStructure(temp);
             lastStructure = lastStructure.getNextStructure();
         }
     }
 
-    public void printList(DocumentStructure node) {
+    /**
+    * The method printList prints the current word's list of document
+    * structures
+    ***/
 
-        while (node != null) {
+    public void printList() {
 
-            System.out.println(node.getDocument() + " - " + node.getFrequency());
-            node = node.getNextStructure();
+        //Saving head reference in temporary variable
+        DocumentStructure node = headStructure;
+
+        System.out.println("\n----------------------------------");
+        System.out.println("Word: " + label);
+        System.out.println("----------------------------------");
+
+        while (headStructure != null) {
+
+            System.out.println(headStructure.getDocument()
+            + " - " + headStructure.getFrequency());
+
+            headStructure = headStructure.getNextStructure();
         }
+
+        //Restoring head reference from temporary variable
+        headStructure = node;
     }
 }

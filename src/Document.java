@@ -39,6 +39,13 @@ class Document {
         return name;
     }
 
+    /**
+    * The setter method getText grants access to the text within the current
+    * document
+    *
+    * @return text String representing text within document
+    ***/
+
     public void setText(String text) {
 
         this.text = text;
@@ -60,17 +67,12 @@ class Document {
     * The setter method setNextDocument sets the document that follows the
     * current one
     *
-    * @param next Document following the current one
+    * @param nextDocument Document following the current one
     ***/
 
-    public void setNextDocument(Document next) {
+    public void setNextDocument(Document nextDocument) {
 
-        nextDocument = next;
-    }
-
-    public WordStructure getHeadStructure() {
-
-        return headStructure;
+        this.nextDocument = nextDocument;
     }
 
     /**
@@ -90,41 +92,72 @@ class Document {
         }
     }
 
+    /**
+    * The method addSortedStructure adds a new word structure to the document's
+    * list of word structures in a lexicographically sorted fashion
+    *
+    * @param word String representing the word label
+    * @param frequency Integer indicating the word's number of appearances
+    ***/
+
     public void addSortedStructure(String word, int frequency) {
 
+        //Checking if the list is empty
         if (headStructure == null) {
 
             headStructure = new WordStructure(word, frequency);
             return;
         }
 
+        //Checking if first node is lexicographically after new word
         if (headStructure.getWord().compareToIgnoreCase(word) > 0) {
 
             headStructure = new WordStructure(word, frequency, headStructure);
             return;
         }
 
+        //Saving head reference in temporary variable
         WordStructure node = headStructure;
 
+        //Checking if subsequent nodes are lexicographically before new word
         while (headStructure.getNextStructure() != null && headStructure.
         getNextStructure().getWord().compareToIgnoreCase(word) < 0) {
 
             headStructure = headStructure.getNextStructure();
         }
 
+        //Positioning new word at correct lexicographical order
         headStructure.setNextStructure(
         new WordStructure(word, frequency, headStructure.getNextStructure()));
+
+        //Restoring head reference from temporary variable
         headStructure = node;
     }
 
-    public void printList(WordStructure node) {
+    /**
+    * The method printList prints the current document's list of word
+    * structures
+    ***/
 
-        System.out.println(text);
+    public void printList() {
 
-        while (node != null) {
+        //Saving head reference in temporary variable
+        WordStructure node = headStructure;
 
-            System.out.println(node.getWord() + " - " + node.getFrequency());
-            node = node.getNextStructure();
+        System.out.println("\n----------------------------------");
+        System.out.println("File path: " + name + "\n");
+        System.out.println("Text:\n" + text);
+        System.out.println("----------------------------------");
+
+        while (headStructure != null) {
+
+            System.out.println(
+            headStructure.getWord() + " - " + headStructure.getFrequency());
+
+            headStructure = headStructure.getNextStructure();
         }
+
+        //Restoring head reference from temporary variable
+        headStructure = node;
     }
 }

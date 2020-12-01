@@ -8,16 +8,16 @@
 
 public class WordStructure {
 
-    private String word;                 //Word within the document
-    private int frequency;               //Appearances of word in document
+    private String word;                 //Word label for this structure
+    private int frequency;               //Appearances of the word in document
     private WordStructure nextStructure; //Structure for the next distinct word
 
     /**
     * The constructor method WordStructure pairs with each word its frequency
     * within the caller document
     *
-    * @param word Word within the document
-    * @param frequency Integer indicating word appearance
+    * @param word Word label for this structure
+    * @param frequency Integer indicating word appearances
     ***/
 
     public WordStructure(String word, int frequency) {
@@ -26,17 +26,42 @@ public class WordStructure {
         this.frequency = frequency;
     }
 
-    public WordStructure(String word, int frequency, WordStructure nextStructure) {
+    /**
+    * The constructor method WordStructure pairs with each word its frequency
+    * within the caller document and assigns the next word structure following
+    * the current one
+    *
+    * @param word Word label for this structure
+    * @param frequency Integer indicating word appearances
+    * @param nextStructure WordStructure following the current one
+    ***/
+
+    public WordStructure(String word, int frequency,
+    WordStructure nextStructure) {
 
         this.word = word;
         this.frequency = frequency;
         this.nextStructure = nextStructure;
     }
 
+    /**
+    * The getter method getWord grants access to the current word structure's
+    * word label
+    *
+    * @return word String label for word of this structure
+    ***/
+
     public String getWord() {
 
         return word;
     }
+
+    /**
+    * The getter method getFrequency grants access to the current word
+    * structure's frequency
+    *
+    * @return frequency Integer indicating word appearances
+    ***/
 
     public int getFrequency() {
 

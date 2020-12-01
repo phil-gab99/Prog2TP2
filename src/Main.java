@@ -4,10 +4,10 @@ public class Main {
 
         IndexationList list = new IndexationList();
         ReverseIndexationList reverseList = new ReverseIndexationList();
-        list.addDocument("./res/lorem.txt", reverseList);
+        list.addDocument("../res/lorem.txt", reverseList);
         list.addDocument("./res/lorem2.txt", reverseList);
 
-        list.printList(list.getHeadDocument());
-        // reverseList.printList(reverseList.getHeadWord());
+        list.printList();
+        reverseList.printList();
     }
 }

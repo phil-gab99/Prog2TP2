@@ -12,69 +12,50 @@ public class ReverseIndexationList {
 
     private Word headWord; //Head word of list
 
-    public Word getHeadWord() {
-
-        return headWord;
-    }
+    /**
+    * The method addWords adds onto the reversed indexation list any new words
+    * or updates already present words
+    *
+    * @param documentTokens ArrayList of words and their frequencies within
+    * the caller document
+    * @param source Document source path
+    ***/
 
     public void addWords(ArrayList<WordFrequency> documentTokens,
     String source) {
 
         for (WordFrequency entry : documentTokens) {
 
-            if (contains(entry.getWord())) {
+            Word temp;
 
-                Word temp = getListWord(entry.getWord());
+
+            if ((temp = contains(entry.getWord())) != null) {
+
+                //Update already existing word
                 temp.addDocumentStructure(source, entry.getFrequency());
             } else {
 
+                //Add new word onto list
                 addSorted(entry.getWord(), source, entry.getFrequency());
             }
         }
     }
 
     /**
-    * The method contains determines whether a word is already within the
-    * current linked list or not
+    * The method contains retrieves a word's reference according to its given
+    * label or null if the word is not within the list
     *
-    * @param word String for which search is undertaken
-    * @return haveWord Boolean indicating if given word is in the list or not
+    * @param word String labelling word
+    * @return Word corresponding to given label name or null
     ***/
 
-    private boolean contains(String word) {
-
-        boolean haveWord = false;
-        Word index = headWord;
-
-        while (index != null) {
-
-            if (word.equalsIgnoreCase(index.getName())) {
-
-                haveWord = true;
-                break;
-            }
-
-            index = index.getNextWord();
-        }
-
-        return haveWord;
-    }
-
-    /**
-    * The method getListWord retrieves a word's reference according to its given
-    * label
-    *
-    * @param name String labelling word
-    * @return Word corresponding with given label name
-    ***/
-
-    public Word getListWord(String name) {
+    public Word contains(String word) {
 
         Word index = headWord;
 
         while(index != null) {
 
-            if (index.getName().equals(name)) {
+            if (index.getLabel().equals(word)) {
 
                 break;
             }
@@ -85,44 +66,68 @@ public class ReverseIndexationList {
         return index;
     }
 
-    public void addSorted(String name, String source, int frequency) {
+    /**
+    * The method addSorted adds a new word onto the current reverse indexation
+    * list in a lexicographically sorted fashion
+    *
+    * @param word String label of word
+    * @param source String file path of source document
+    * @param frequency Integer indicating occurences of given word within
+    * document
+    ***/
 
+    public void addSorted(String word, String source, int frequency) {
+
+        //Checking if the list is empty
         if (headWord == null) {
 
-            headWord = new Word(name, new DocumentStructure(source, frequency));
+            headWord = new Word(
+            word, new DocumentStructure(source, frequency));
             return;
         }
 
-        if (headWord.getName().compareToIgnoreCase(name) > 0) {
+        //Checking if first node is lexicographically after new word
+        if (headWord.getLabel().compareToIgnoreCase(word) > 0) {
 
-            headWord = new Word(name, headWord, new DocumentStructure(source, frequency));
+            headWord = new Word(
+            word, headWord, new DocumentStructure(source, frequency));
             return;
         }
 
+        //Saving head reference in temporary variable
         Word node = headWord;
 
+        //Checking if subsequent nodes are lexicographically before new word
         while (headWord.getNextWord() != null
-        && headWord.getNextWord().getName().compareToIgnoreCase(name) < 0) {
+        && headWord.getNextWord().getLabel().compareToIgnoreCase(word) < 0) {
 
             headWord = headWord.getNextWord();
         }
 
-        headWord.setNextWord(new Word(name, headWord.getNextWord(), new DocumentStructure(source, frequency)));
+        //Positioning new word at correct lexicographical order
+        headWord.setNextWord(new Word(word, headWord.getNextWord(),
+        new DocumentStructure(source, frequency)));
 
+        //Restoring head reference from temporary variable
         headWord = node;
     }
 
-    public void printList(Word node) {
+    /**
+    * The method printList prints the current reversed list to the user
+    ***/
 
-        while (node != null) {
+    public void printList() {
 
-            // System.out.print(node.getName() " - " );
+        //Saving head reference in temporary variable
+        Word node = headWord;
 
-            System.out.println(node.getName());
-            node.printList(node.getHeadStructure());
-            System.out.println();
-            node = node.getNextWord();
+        while (headWord != null) {
+
+            headWord.printList();
+            headWord = headWord.getNextWord();
         }
-        // System.out.println("null");
+
+        //Restoring head reference from temporary variable
+        headWord = node;
     }
 }
