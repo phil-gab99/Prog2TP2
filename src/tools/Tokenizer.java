@@ -22,6 +22,7 @@ public class Tokenizer {
     * The constructor method Tokenizer tokenizes a given file
     *
     * @param path String indicating file path to tokenize
+    * @throws IOException if invalid path specified
     ***/
 
     public Tokenizer(String path) throws IOException {
@@ -59,6 +60,7 @@ public class Tokenizer {
     *
     * @param path File path to read
     * @return readText Contents of file saved in a String variable
+    * @throws IOException if invalid path specified
     ***/
 
     private String readFile(String path) throws IOException {
