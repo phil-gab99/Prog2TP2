@@ -57,7 +57,7 @@ public class ReverseIndexationList {
 
         while (index != null) {
 
-            if (index.getLabel().equals(word)) {
+            if (index.getLabel().equalsIgnoreCase(word)) {
 
                 break;
             }

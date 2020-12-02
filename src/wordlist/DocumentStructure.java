@@ -77,4 +77,9 @@ public class DocumentStructure {
 
         this.nextStructure = nextStructure;
     }
+
+    public String toString() {
+
+        return document + " - " + frequency;
+    }
 }

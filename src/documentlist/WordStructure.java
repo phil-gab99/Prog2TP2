@@ -93,4 +93,9 @@ public class WordStructure {
 
         nextStructure = next;
     }
+
+    public String toString() {
+
+        return word + " - " + frequency;
+    }
 }

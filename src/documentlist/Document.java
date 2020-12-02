@@ -1,5 +1,6 @@
 package documentlist;
 
+import java.util.Arrays;
 import java.util.ArrayList;
 import tools.WordFrequency;
 
@@ -11,7 +12,7 @@ import tools.WordFrequency;
 * @version 1.0 2020-12-07
 ***/
 
-class Document {
+public class Document {
 
     private String name;                 //Document file path
     private String text;                 //Text within document
@@ -138,6 +139,44 @@ class Document {
     }
 
     /**
+    * The method score calculates a document's score with respect to the given
+    * list of words or returns 0 if the document does not contain each word
+    *
+    * @param words String array of words of interest
+    ***/
+
+    public int score(String[] words) {
+
+        Arrays.sort(words);
+
+        int sum = 0;
+        int wordIndex = 0;
+        int count = 0;
+
+        WordStructure node = headStructure;
+
+        while (node != null) {
+
+            while(wordIndex < words.length) {
+
+                if (node.getWord().equalsIgnoreCase(words[wordIndex++])) {
+
+                    sum += node.getFrequency();
+                    count ++;
+                    break;
+                }
+            }
+
+            wordIndex = 0;
+            node = node.getNextStructure();
+        }
+
+        sum = (count == words.length ? sum : 0);
+
+        return sum;
+    }
+
+    /**
     * The method printList prints the current document's list of word
     * structures
     ***/
@@ -154,9 +193,7 @@ class Document {
 
         while (headStructure != null) {
 
-            System.out.println(
-            headStructure.getWord() + " - " + headStructure.getFrequency());
-
+            System.out.println(headStructure);
             headStructure = headStructure.getNextStructure();
         }
 

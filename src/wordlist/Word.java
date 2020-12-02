@@ -110,6 +110,18 @@ public class Word {
     }
 
     /**
+    * The getter method getHeadStructure grants access to the current word's
+    * head document structure
+    *
+    * @return headStructure Word head structure
+    ***/
+
+    public DocumentStructure getHeadStructure() {
+
+        return headStructure;
+    }
+
+    /**
     * The method addDocumentStructure adds an additional document structure to
     * the current word's list of document structures
     *

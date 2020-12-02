@@ -19,6 +19,18 @@ public class IndexationList {
     private Document lastDocument; //Last document of list
 
     /**
+    * The getter method getHeadDocument grants access to the indexation list's
+    * head document
+    *
+    * @return headDocument Head document of list
+    ***/
+
+    public Document getHeadDocument() {
+
+        return headDocument;
+    }
+
+    /**
     * The method addDocument adds a new document at the end of the linked list
     * and then initiates the document analysis
     *
