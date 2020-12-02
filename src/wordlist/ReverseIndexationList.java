@@ -31,7 +31,6 @@ public class ReverseIndexationList {
 
             Word temp;
 
-
             if ((temp = contains(entry.getWord())) != null) {
 
                 //Update already existing word
@@ -56,7 +55,7 @@ public class ReverseIndexationList {
 
         Word index = headWord;
 
-        while(index != null) {
+        while (index != null) {
 
             if (index.getLabel().equals(word)) {
 

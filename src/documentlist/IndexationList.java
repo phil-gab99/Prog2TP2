@@ -28,13 +28,22 @@ public class IndexationList {
 
     public void addDocument(String name, ReverseIndexationList reverseList) {
 
-        Document temp = new Document(name);
+        Document temp;
 
         if (headDocument == null) { //Checking if first document
 
+            temp = new Document(name);
+
             headDocument = temp;
             lastDocument = temp;
+        } else if ((temp = contains(name)) != null) {
+
+            System.out.println("The document path " + name
+            + " has already been added");
+            return;
         } else { //Appends onto list
+
+            temp = new Document(name);
 
             lastDocument.setNextDocument(temp);
             lastDocument = lastDocument.getNextDocument();
@@ -60,6 +69,30 @@ public class IndexationList {
 
         //Updating reversed indexation list
         reverseList.addWords(documentTokens, temp.getName());
+    }
+
+    /**
+    * The method contains retrieves a document's reference according to the
+    * given name or null if the document is not within the list
+    *
+    * @param name String path of the document
+    ***/
+
+    public Document contains(String name) {
+
+        Document index = headDocument;
+
+        while (index != null) {
+
+            if (index.getName().equals(name)) {
+
+                break;
+            }
+
+            index = index.getNextDocument();
+        }
+
+        return index;
     }
 
     /**
