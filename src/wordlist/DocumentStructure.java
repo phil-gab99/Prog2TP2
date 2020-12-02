@@ -78,6 +78,13 @@ public class DocumentStructure {
         this.nextStructure = nextStructure;
     }
 
+    /**
+    * The method toString indicates the string format of a document structure
+    * object to facilitate printing its contents
+    *
+    * @return String implementation of document structure
+    ***/
+
     public String toString() {
 
         return document + " - " + frequency;

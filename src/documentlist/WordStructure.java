@@ -94,6 +94,13 @@ public class WordStructure {
         nextStructure = next;
     }
 
+    /**
+    * The method toString indicates the string format of a word structure
+    * object to facilitate printing its contents
+    *
+    * @return String implementation of word structure
+    ***/
+
     public String toString() {
 
         return word + " - " + frequency;

@@ -147,31 +147,26 @@ public class Document {
 
     public int score(String[] words) {
 
-        Arrays.sort(words);
+        Arrays.sort(words); //Sorting the array for simpler comparison
 
-        int sum = 0;
-        int wordIndex = 0;
-        int count = 0;
+        int sum = 0;        //Document score
+        int wordIndex = 0;  //Index of provided string array
 
-        WordStructure node = headStructure;
+        WordStructure node = headStructure; //Acquiring head node reference
 
-        while (node != null) {
+        while((wordIndex < words.length) && (node != null)) {
 
-            while(wordIndex < words.length) {
+            if (node.getWord().equalsIgnoreCase(words[wordIndex])) {
 
-                if (node.getWord().equalsIgnoreCase(words[wordIndex++])) {
-
-                    sum += node.getFrequency();
-                    count ++;
-                    break;
-                }
+                sum += node.getFrequency();
+                wordIndex ++;
             }
 
-            wordIndex = 0;
             node = node.getNextStructure();
         }
 
-        sum = (count == words.length ? sum : 0);
+        //Checking if all words are within document
+        sum = (wordIndex == words.length ? sum : 0);
 
         return sum;
     }

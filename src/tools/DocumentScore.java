@@ -27,10 +27,26 @@ public class DocumentScore implements Comparable<DocumentScore> {
         this.score = score;
     }
 
+    /**
+    * The method toString indicates the string format of a document score
+    * object to facilitate printing its contents
+    *
+    * @return String implementation of document score
+    ***/
+
     public String toString() {
 
         return "document: " + document + "\nscore: " + score;
     }
+
+    /**
+    * The method compareTo indicates an descending sorting order for document
+    * score objects
+    *
+    * @param docScore Document score to compare with current one
+    * @return Integer factor of comparison
+    * @see java.lang.Comparable
+    ***/
 
     public int compareTo(DocumentScore docScore) {
 

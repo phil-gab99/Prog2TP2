@@ -160,9 +160,7 @@ public class Word {
 
         while (headStructure != null) {
 
-            System.out.println(headStructure.getDocument()
-            + " - " + headStructure.getFrequency());
-
+            System.out.println(headStructure);
             headStructure = headStructure.getNextStructure();
         }
 

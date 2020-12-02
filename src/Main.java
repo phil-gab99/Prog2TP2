@@ -15,10 +15,10 @@ public class Main {
         list.addDocument("./res/lorem.txt", reverseList);
         list.addDocument("./res/lorem2.txt", reverseList);
 
-        list.printList();
-        reverseList.printList();
+        // list.printList();
+        // reverseList.printList();
 
-        String[] words = {"ad", "in", "lorem"};
+        String[] words = {"ad", "in", "lorem", "c", "holder", "s"};
 
         ArrayList<DocumentScore> scores = search(words);
 
