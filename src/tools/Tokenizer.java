@@ -99,16 +99,14 @@ public class Tokenizer {
 
         String[] textTokens;
 
-        text = text.replaceAll("[^A-z0-9]", " ");
+        text = text.replaceAll("[^A-z0-9]", " ").trim();
 
         if (text.equals("")) { //Checking for empty string
 
-            text = " ";
-            textTokens = text.split("\\s+");
-        } else { //Trimming for leading or trailing whitespaces before split
-
-            textTokens = text.trim().split("\\s+");
+            text = " ";   
         }
+
+        textTokens = text.split("\\s+");
 
         ArrayList<WordFrequency> textUniqueTokens =
         new ArrayList<WordFrequency>();

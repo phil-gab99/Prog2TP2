@@ -50,9 +50,10 @@ public class IndexationList {
 
             headDocument = temp;
             lastDocument = temp;
-        } else if ((temp = contains(document.getName())) != null) {
+        } else if (contains(document.getName()) != null) {
 
-            SearchView.msgBox("This file has already been previously added.",
+            SearchView.msgBox("The file " + document.getName()
+            + " has already been previously added.",
             "Error Selection", SearchView.ERROR);
             return;
         } else { //Appends onto list

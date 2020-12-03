@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -11,12 +12,15 @@ import java.awt.Toolkit;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 
 public class SearchView extends JFrame {
@@ -32,8 +36,10 @@ public class SearchView extends JFrame {
     private SearchModel model;
     private SearchControl control;
 
+    JDialog dialog;              //Dialog used for various user input contexts
     JTextArea indexList;
     JTextArea indexListRev;
+    JTextField wordQuery;
 
     public SearchView() {
 
@@ -84,22 +90,67 @@ public class SearchView extends JFrame {
         c.gridwidth = GridBagConstraints.REMAINDER;
         makeButton(this, "Search", gridbag, c, 2);
 
-        setTitle("Test");
+        setTitle("File Management");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
 
     public void fileChooserDialog() {
 
-        JFileChooser dialog = new JFileChooser("./res");
-        dialog.setDialogTitle("Select Files");
-        dialog.setMultiSelectionEnabled(true);
-        int option = dialog.showDialog(this, "Select");
+        JFileChooser fileDialog = new JFileChooser("./res");
+        fileDialog.setDialogTitle("Select Files");
+        fileDialog.setMultiSelectionEnabled(true);
+        int option = fileDialog.showDialog(this, "Select");
 
         if (option == JFileChooser.APPROVE_OPTION) {
 
-            model.updateFiles(dialog.getSelectedFiles());
+            model.updateFiles(fileDialog.getSelectedFiles());
         }
+    }
+
+    public void searchWordsDialog() {
+
+        //Instantiating dialog, radio button group and details list
+        dialog = new JDialog(this, "Search Words", true);
+        wordQuery = new JTextField();
+        wordQuery.addKeyListener(control.new KeyMixed());
+
+        //Configuring dialog layout, size and location
+        GridBagLayout gridbag = new GridBagLayout();
+        GridBagConstraints c = new GridBagConstraints();
+        dialog.setSize(FRAME_WIDTH/2, FRAME_HEIGHT/3);
+        dialog.setLayout(gridbag);
+        centerComponent(dialog, 0);
+
+        //Textfield and button locations
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 1.0;
+
+        c.gridy = 1;
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.insets = new Insets(5, 20, 5, 5);
+        makeLabel(dialog, "*Separate each entry with a comma", gridbag, c,
+        SwingConstants.LEFT, Font.ITALIC, 12);
+
+        c.gridy = 2;
+        c.gridwidth = 5;
+        c.insets = new Insets(5, 20, 5, 5);
+        makeButton(dialog, "OK", gridbag, c, 3);
+        c.insets = new Insets(5, 5, 5, 20);
+        makeButton(dialog, "Cancel", gridbag, c, 4);
+
+        c.weightx = 0.0;
+        c.gridy = 0;
+        c.gridwidth = 1;
+        c.insets = new Insets(5, 20, 5, 5);
+        makeLabel(dialog, "Words: ", gridbag, c, SwingConstants.LEFT,
+        Font.PLAIN, 14);
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.insets = new Insets(5, 5, 5, 20);
+        gridbag.setConstraints(wordQuery, c);
+        dialog.add(wordQuery);
+
+        dialog.setVisible(true);
     }
 
     /**
@@ -124,10 +175,34 @@ public class SearchView extends JFrame {
         switch (listenType) {
 
             case 1: button.addActionListener(control.new AddFiles()); break;
+            case 2: button.addActionListener(control.new Search()); break;
+            case 3: button.addActionListener(control.new OkSearch()); break;
+            case 4: button.addActionListener(control. new Cancel()); break;
             default: System.out.println("Lolilou");
         }
 
         parent.add(button);
+    }
+
+    /**
+    * The makeLabel method creates a label to implement onto the interface
+    *
+    * @param parent Container that will hold the label
+    * @param name String indicating label content
+    * @param gridbag GridBagLayout with parent layout details
+    * @param c GridBagConstraints indicating the specific constraints and
+    * location details
+    * @param aligment Integer indicating the text alignment within label
+    ***/
+
+    public void makeLabel(Container parent, String name, GridBagLayout gridbag,
+    GridBagConstraints c, int alignment, int style, int size) {
+
+        JLabel label = new JLabel(name, alignment);
+        label.setFont(new Font("Dialog", style, size));
+        gridbag.setConstraints(label, c);
+
+        parent.add(label);
     }
 
     /**

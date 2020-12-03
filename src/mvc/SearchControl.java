@@ -54,4 +54,54 @@ class SearchControl {
             model.addFiles(); //Method calling JFileChooser for selecting files
         }
     }
+
+    public class Search implements ActionListener {
+
+        /**
+        * The method actionPerformed is triggered upon pressing the button the
+        * current instance is listening to
+        *
+        * @param e ActionEvent holding information on the press of the button
+        ***/
+
+        public void actionPerformed(ActionEvent e) {
+
+            model.search(); //Method calling dialog for searches
+        }
+    }
+
+    public class OkSearch implements ActionListener {
+
+        /**
+        * The method actionPerformed is triggered upon pressing the button the
+        * current instance is listening to
+        *
+        * @param e ActionEvent holding information on the press of the button
+        ***/
+
+        public void actionPerformed(ActionEvent e) {
+
+            model.OkSearch(); //Method calling frame with results
+        }
+    }
+
+    /**
+    * The class Cancel handles the event triggered upon pressing the Cancel
+    * button this class listens to present in many dialogs
+    ***/
+
+    public class Cancel implements ActionListener {
+
+        /**
+        * The method actionPerformed is triggered upon pressing the button the
+        * current instance is listening to
+        *
+        * @param e ActionEvent holding information on the press of the button
+        ***/
+
+        public void actionPerformed(ActionEvent e) {
+
+            model.cancel(); //Method closing current dialog
+        }
+    }
 }

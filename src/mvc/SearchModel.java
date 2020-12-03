@@ -1,5 +1,6 @@
 package mvc;
 
+import java.util.Arrays;
 import java.io.File;
 import java.io.IOException;
 import java.awt.event.KeyEvent;
@@ -15,11 +16,11 @@ class SearchModel {
     private ReverseIndexationList listR = new ReverseIndexationList();
 
     /**
-    * The constructor method SearchModel allows the link between the model and
-    * view classes for graphical interface interactions
+    * The constructor method SearchModel allows the link between the model and view
+    * classes for graphical interface interactions
     *
     * @param view SearchView granting access to methods configuring graphical
-    * elements
+    *             elements
     ***/
 
     public SearchModel(SearchView view) {
@@ -38,7 +39,7 @@ class SearchModel {
 
         char c = e.getKeyChar();
 
-        if ((c < 'A' || c > 'z') && (c < '0' || c > '9')) {
+        if ((c < 'A' || c > 'z') && (c < '0' || c > '9') && (c != ',')) {
 
             e.consume();
         }
@@ -47,6 +48,11 @@ class SearchModel {
     public void addFiles() {
 
         view.fileChooserDialog();
+    }
+
+    public void search() {
+
+        view.searchWordsDialog();
     }
 
     public void updateFiles(File[] files) {
@@ -58,5 +64,28 @@ class SearchModel {
 
         view.indexList.setText(list.printList());
         view.indexListRev.setText(listR.printList());
+    }
+
+    public void OkSearch() {
+
+        String query = view.wordQuery.getText().replaceAll("[^A-z0-9]", " ").
+        trim();
+
+        if (query.equals("")) { //Checking for empty string
+
+            query = " ";
+        }
+
+        String[] words = query.split("\\s+");
+    }
+
+    /**
+    * The method cancel closes the dialog from which the caller button is
+    * located
+    ***/
+
+    public void cancel() {
+
+        view.dialog.dispose();
     }
 }
