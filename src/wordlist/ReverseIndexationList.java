@@ -115,21 +115,27 @@ public class ReverseIndexationList {
     }
 
     /**
-    * The method printList prints the current reversed list to the user
+    * The method printList retrieves the current list in a string format
+    *
+    * @return infoList String implementation of list
     ***/
 
-    public void printList() {
+    public String printList() {
 
         //Saving head reference in temporary variable
         Word node = headWord;
 
+        String infoList = "";
+
         while (headWord != null) {
 
-            headWord.printList();
+            infoList += headWord.printList();
             headWord = headWord.getNextWord();
         }
 
         //Restoring head reference from temporary variable
         headWord = node;
+
+        return infoList;
     }
 }

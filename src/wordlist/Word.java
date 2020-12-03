@@ -145,26 +145,32 @@ public class Word {
     }
 
     /**
-    * The method printList prints the current word's list of document
-    * structures
+    * The method printList retrieves the current word's list of document
+    * structures in their String format
+    *
+    * @return info String implemenation of list
     ***/
 
-    public void printList() {
+    public String printList() {
 
         //Saving head reference in temporary variable
         DocumentStructure node = headStructure;
 
-        System.out.println("\n----------------------------------");
-        System.out.println("Word: " + label);
-        System.out.println("----------------------------------");
+        String info = "Word: " + label + "\n\n" +
+        "     document - frequency\n";
 
         while (headStructure != null) {
 
-            System.out.println(headStructure);
+            info += "     " + headStructure + "\n";
+            // System.out.println(headStructure);
             headStructure = headStructure.getNextStructure();
         }
 
+        info += "----------------------------------\n";
+
         //Restoring head reference from temporary variable
         headStructure = node;
+
+        return info;
     }
 }

@@ -1,5 +1,6 @@
 package documentlist;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import wordlist.ReverseIndexationList;
@@ -34,28 +35,28 @@ public class IndexationList {
     * The method addDocument adds a new document at the end of the linked list
     * and then initiates the document analysis
     *
-    * @param name String indicating document file path
+    * @param document File object of document
     * @param reverseList ReverseIndexationList reference to update paired list
     ***/
 
-    public void addDocument(String name, ReverseIndexationList reverseList) {
+    public void addDocument(File document, ReverseIndexationList reverseList) {
 
         Document temp;
 
         if (headDocument == null) { //Checking if first document
 
-            temp = new Document(name);
+            temp = new Document(document.getName());
 
             headDocument = temp;
             lastDocument = temp;
-        } else if ((temp = contains(name)) != null) {
+        } else if ((temp = contains(document.getName())) != null) {
 
-            System.out.println("The document path " + name
+            System.out.println("The document " + document.getName()
             + " has already been added");
             return;
         } else { //Appends onto list
 
-            temp = new Document(name);
+            temp = new Document(document.getName());
 
             lastDocument.setNextDocument(temp);
             lastDocument = lastDocument.getNextDocument();
@@ -65,14 +66,14 @@ public class IndexationList {
 
         try {
 
-            tokens = new Tokenizer(temp.getName());
+            tokens = new Tokenizer(document.getPath());
         } catch(IOException e) {
 
             System.out.println("Please specify a valid file path");
             return;
         }
 
-        temp.setText(tokens.getText());
+        temp.setText(tokens.getActualText());
 
         //Acquiring unique tokens and their frequency
         ArrayList<WordFrequency> documentTokens = tokens.getUniqueTokens();
@@ -108,19 +109,26 @@ public class IndexationList {
     }
 
     /**
-    * The method printList prints the current list to the user
+    * The method printList retrieves the current list in a string format
+    *
+    * @return infoList String implementation of list
     ***/
 
-    public void printList() {
+    public String printList() {
 
+        //Saving head reference in temporary variable
         Document node = headDocument;
+
+        String infoList = "";
 
         while (headDocument != null) {
 
-            headDocument.printList();
+            infoList += headDocument.printList();
             headDocument = headDocument.getNextDocument();
         }
 
-        headDocument = node;
+        headDocument = node; //Restoring head reference from temporary variable
+
+        return infoList;
     }
 }

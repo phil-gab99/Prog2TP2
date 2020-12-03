@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class Tokenizer {
 
     private String text;                           //Text within file
+    private String actualText;                     //Text including line feeds
     private ArrayList<WordFrequency> uniqueTokens; //Text unique tokens
 
     /**
@@ -27,19 +28,22 @@ public class Tokenizer {
 
     public Tokenizer(String path) throws IOException {
 
-        text = readFile(path);
+        String[] texts = readFile(path);
+
+        text = texts[0];
+        actualText = texts[1];
         uniqueTokens = createTokens();
     }
 
     /**
-    * The getter method getText grants access to the file's text contents
+    * The getter method getActualText grants access to the file's text contents
     *
     * @return text String holding text within file
     ***/
 
-    public String getText() {
+    public String getActualText() {
 
-        return text;
+        return actualText;
     }
 
     /**
@@ -59,24 +63,28 @@ public class Tokenizer {
     * contents in a String variable
     *
     * @param path File path to read
-    * @return readText Contents of file saved in a String variable
+    * @return readTexts Contents of file saved in a String variable
     * @throws IOException if invalid path specified
     ***/
 
-    private String readFile(String path) throws IOException {
+    private String[] readFile(String path) throws IOException {
 
         BufferedReader reader = new BufferedReader(new FileReader(path));
 
         String line;
-        String readText = "";
+        String readText = "";       //Read text to tokenize
+        String actualReadText = ""; //Read text including line feeds
 
         while ((line = reader.readLine()) != null) {
 
             readText += line + " ";
+            actualReadText += line + "\n";
         }
 
         reader.close();
-        return readText;
+
+        String[] readTexts = {readText, actualReadText};
+        return readTexts;
     }
 
     /**

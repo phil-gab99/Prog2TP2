@@ -4,6 +4,7 @@ import documentlist.IndexationList;
 import documentlist.Document;
 import wordlist.*;
 import tools.DocumentScore;
+import mvc.SearchView;
 
 public class Main {
 
@@ -12,20 +13,22 @@ public class Main {
 
     public static void main(String[] args) {
 
-        list.addDocument("./res/lorem.txt", reverseList);
-        list.addDocument("./res/lorem2.txt", reverseList);
-
+        // list.addDocument("./res/lorem.txt", reverseList);
+        // list.addDocument("./res/lorem2.txt", reverseList);
+        //
         // list.printList();
         // reverseList.printList();
+        //
+        // String[] words = {"ad", "in", "lorem", "c", "holder", "s"};
+        //
+        // ArrayList<DocumentScore> scores = search(words);
+        //
+        // for (DocumentScore d : scores) {
+        //
+        //     System.out.println(d);
+        // }
 
-        String[] words = {"ad", "in", "lorem", "c", "holder", "s"};
-
-        ArrayList<DocumentScore> scores = search(words);
-
-        for (DocumentScore d : scores) {
-
-            System.out.println(d);
-        }
+        new SearchView();
     }
 
     public static ArrayList<DocumentScore> search(String[] query) {
