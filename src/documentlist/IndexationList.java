@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import wordlist.ReverseIndexationList;
 import tools.*;
+import mvc.SearchView;
 
 /**
 * The class IndexationList defines the fields and methods required for a linked
@@ -51,8 +52,8 @@ public class IndexationList {
             lastDocument = temp;
         } else if ((temp = contains(document.getName())) != null) {
 
-            System.out.println("The document " + document.getName()
-            + " has already been added");
+            SearchView.msgBox("This file has already been previously added.",
+            "Error Selection", SearchView.ERROR);
             return;
         } else { //Appends onto list
 

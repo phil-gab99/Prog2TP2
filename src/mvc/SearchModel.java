@@ -54,8 +54,9 @@ class SearchModel {
         for (File f : files) {
 
             list.addDocument(f, listR);
-            view.indexList.setText(list.printList());
-            view.indexListRev.setText(listR.printList());
         }
+
+        view.indexList.setText(list.printList());
+        view.indexListRev.setText(listR.printList());
     }
 }

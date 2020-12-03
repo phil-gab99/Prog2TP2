@@ -27,6 +27,8 @@ public class SearchView extends JFrame {
     private static final Toolkit screen = Toolkit.getDefaultToolkit();
     private static final Dimension d = screen.getScreenSize();
 
+    public static final int ERROR = JOptionPane.ERROR_MESSAGE;
+
     private SearchModel model;
     private SearchControl control;
 
@@ -96,7 +98,6 @@ public class SearchView extends JFrame {
 
         if (option == JFileChooser.APPROVE_OPTION) {
 
-            // System.out.println("Here");
             model.updateFiles(dialog.getSelectedFiles());
         }
     }
@@ -141,5 +142,19 @@ public class SearchView extends JFrame {
 
         c.setLocation((d.width - c.getWidth()) / 2 - offset,
         (d.height - c.getHeight()) / 2 - offset);
+    }
+
+    /**
+    * The method msgBox creates an informative pane to the user with
+    * the given message as information
+    *
+    * @param message String holding information to display
+    * @param title String indicating pane title
+    * @param messageType Integer indicating the type of message to display
+    ***/
+
+    public static void msgBox(String message, String title, int messageType) {
+
+        JOptionPane.showMessageDialog(null, message, title, messageType);
     }
 }

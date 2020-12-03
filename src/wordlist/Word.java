@@ -156,7 +156,9 @@ public class Word {
         //Saving head reference in temporary variable
         DocumentStructure node = headStructure;
 
-        String info = "Word: " + label + "\n\n" +
+        String info = "" +
+        "-----------------------------------------------------------------\n" +
+        "Word: " + label + "\n\n" +
         "     document - frequency\n";
 
         while (headStructure != null) {
@@ -165,8 +167,6 @@ public class Word {
             // System.out.println(headStructure);
             headStructure = headStructure.getNextStructure();
         }
-
-        info += "----------------------------------\n";
 
         //Restoring head reference from temporary variable
         headStructure = node;
