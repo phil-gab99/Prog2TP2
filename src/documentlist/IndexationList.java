@@ -99,7 +99,7 @@ public class IndexationList {
 
         while (index != null) {
 
-            if (index.getName().equals(name)) {
+            if (index.getName().equalsIgnoreCase(name)) {
 
                 break;
             }

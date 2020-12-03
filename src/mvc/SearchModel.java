@@ -1,11 +1,15 @@
 package mvc;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.io.File;
 import java.io.IOException;
 import java.awt.event.KeyEvent;
+import documentlist.Document;
 import documentlist.IndexationList;
-import wordlist.ReverseIndexationList;
+import wordlist.*;
+import tools.DocumentScore;
 
 class SearchModel {
 
@@ -77,6 +81,21 @@ class SearchModel {
         }
 
         String[] words = query.split("\\s+");
+
+        if (words.length == 0) {
+
+            SearchView.msgBox("Please enter a valid query.", "No Input",
+            SearchView.ERROR);
+            return;
+        } else if (hasDuplicates(words)) {
+
+            SearchView.msgBox("Please avoid duplicate entries.", "Duplicates",
+            SearchView.ERROR);
+            return;
+        } else {
+
+            searchList(words);
+        }
     }
 
     /**
@@ -87,5 +106,75 @@ class SearchModel {
     public void cancel() {
 
         view.dialog.dispose();
+    }
+
+    private boolean hasDuplicates(String[] words) {
+
+        HashSet<String> wordSet = new HashSet<String>();
+        boolean duplicate = false;
+
+        for (String w : words) {
+
+            if (wordSet.contains(w)) {
+
+                duplicate = true;
+                break;
+            }
+
+            wordSet.add(w);
+        }
+
+        return duplicate;
+    }
+
+    /**
+    * The method searchList searches within the list instances for the
+    * documents that hold the words of interest
+    *
+    * @param words Array of words of interest
+    * @return result ArrayList of documents paired with their score
+    ***/
+
+    private ArrayList<DocumentScore> searchList(String[] words) {
+
+        Word temp;
+        ArrayList<DocumentScore> result;
+
+        if ((words.length == 0)
+        || ((temp = listR.contains(words[0])) == null)) {
+
+            return null;
+        } else {
+
+            result = new ArrayList<DocumentScore>();
+            DocumentStructure node = temp.getHeadStructure();
+
+            while (node != null) {
+
+                Document doc = list.getHeadDocument();
+
+                while (doc != null) {
+
+                    if (doc.getName().equalsIgnoreCase(node.getDocument())) {
+
+                        int sum = doc.score(words);
+
+                        if (sum != 0) {
+
+                            result.add(new DocumentScore(doc.getName(), sum));
+                        }
+
+                        break;
+                    }
+
+                    doc = doc.getNextDocument();
+                }
+
+                node = node.getNextStructure();
+            }
+        }
+
+        Collections.sort(result);
+        return result;
     }
 }
