@@ -44,7 +44,7 @@ public class SearchView extends JFrame {
         indexList = new JTextArea();
         indexListRev = new JTextArea();
 
-        
+        JScrollPane scrollpane = new JScrollPane(listAccounts);
     }
 
     /**
