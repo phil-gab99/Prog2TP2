@@ -23,28 +23,45 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 
+/**
+* The class SearchView indicates how the first main window of the application
+* is configured and offers plenty of methods for graphical elements
+*
+* @author Philippe Gabriel
+* @version 1.0 2020-12-07
+***/
+
 public class SearchView extends JFrame {
 
     private static final int FRAME_WIDTH = 800;  //Default frame width
     private static final int FRAME_HEIGHT = 450; //Default frame height
 
+    //Acquiring screen dimensions
     private static final Toolkit screen = Toolkit.getDefaultToolkit();
     private static final Dimension d = screen.getScreenSize();
 
+    //Saving error message value
     public static final int ERROR = JOptionPane.ERROR_MESSAGE;
 
-    private SearchModel model;
-    private SearchControl control;
+    private SearchModel model;     //Model used for handling events triggered
+    private SearchControl control; //Control directing where events lead
 
-    JDialog dialog;              //Dialog used for various user input contexts
-    JFrame searchResult;
-    JTextArea indexList;
-    JTextArea indexListRev;
-    JTextArea searchResultList;
-    JTextField wordQuery;
+    JDialog dialog;             //Dialog used for various user input contexts
+    JFrame searchResult;        //Frame holding user search results
+    JTextArea indexList;        //Text Area for indexation list
+    JTextArea indexListRev;     //Text Area for reverse indexation list
+    JTextArea searchResultList; //Text Area for search results list
+    JTextField wordQuery;       //Textfield for user search input
+
+    /**
+    * The constructor method SearchView generates the main frame of the
+    * application and holds the straight and reversed indexation lists as well
+    * as some buttons for certain options
+    ***/
 
     public SearchView() {
 
+        //The model and control are instantiated
         model = new SearchModel(this);
         control = new SearchControl(model);
 
@@ -55,6 +72,7 @@ public class SearchView extends JFrame {
         setSize(FRAME_WIDTH, FRAME_HEIGHT);
         centerComponent(this, 0);
 
+        //Instantiating and configuring indexation list area
         indexList = new JTextArea();
         JScrollPane scrollL = new JScrollPane(indexList);
         JLabel headL = new JLabel("Indexation List", JLabel.LEFT);
@@ -63,6 +81,7 @@ public class SearchView extends JFrame {
         indexList.setMargin(new Insets(5, 20, 5, 20));
         indexList.setEditable(false);
 
+        //Instantiating and configuring reverse indexation list area
         indexListRev = new JTextArea();
         JScrollPane scrollLR = new JScrollPane(indexListRev);
         JLabel headLR = new JLabel("Reverse Indexation List", JLabel.LEFT);
@@ -78,6 +97,7 @@ public class SearchView extends JFrame {
         c.insets = new Insets(5, 20, 5, 20);
         c.gridwidth = GridBagConstraints.REMAINDER;
 
+        //Applying constraints on text areas
         gridbag.setConstraints(scrollL, c);
         gridbag.setConstraints(scrollLR, c);
         add(scrollL);
@@ -97,6 +117,11 @@ public class SearchView extends JFrame {
         setVisible(true);
     }
 
+    /**
+    * The method fileChooserDialog generates the file chooser dialog upon
+    * pressing the Add Files button within the main window
+    ***/
+
     public void fileChooserDialog() {
 
         JFileChooser fileDialog = new JFileChooser("./res");
@@ -110,9 +135,14 @@ public class SearchView extends JFrame {
         }
     }
 
+    /**
+    * The method searchWordsDialog generates the dialog box upon pressing the
+    * Search button within the main window
+    ***/
+
     public void searchWordsDialog() {
 
-        //Instantiating dialog, radio button group and details list
+        //Instantiating dialog and input textfield
         dialog = new JDialog(this, "Search Words", true);
         wordQuery = new JTextField();
         wordQuery.addKeyListener(control.new KeyMixed());
@@ -156,14 +186,13 @@ public class SearchView extends JFrame {
     }
 
     /**
-    * The method addWordsDialog
-    *
-    *
+    * The method addWordsDialog generates the dialog upon pressing the Add
+    * Words button from within the search results frame
     ***/
 
     public void addWordsDialog() {
 
-        //Instantiating dialog, radio button group and details list
+        //Instantiating dialog and input textfield
         dialog = new JDialog(this, "Search Words", true);
         wordQuery = new JTextField();
         wordQuery.addKeyListener(control.new KeyMixed());
@@ -223,6 +252,7 @@ public class SearchView extends JFrame {
         searchResult.setSize(FRAME_WIDTH, FRAME_HEIGHT);
         centerComponent(searchResult, 50);
 
+        //Instantiating and configuring results list text area
         searchResultList = new JTextArea(result);
         JScrollPane scrollRes = new JScrollPane(searchResultList);
         JLabel headRes = new JLabel("Search Result List", JLabel.LEFT);
@@ -238,6 +268,7 @@ public class SearchView extends JFrame {
         c.insets = new Insets(5, 20, 5, 20);
         c.gridwidth = GridBagConstraints.REMAINDER;
 
+        //Applying constraints on text area
         gridbag.setConstraints(scrollRes, c);
         searchResult.add(scrollRes);
 
@@ -318,6 +349,13 @@ public class SearchView extends JFrame {
         (d.height - c.getHeight()) / 2 - offset);
     }
 
+    /**
+    * The method isSearchResultVisible indicates whether the search results
+    * frame is currently active or not
+    *
+    * @return Boolean indicating whether frame is visible or not
+    ***/
+
     public boolean isSearchResultVisible() {
 
         return searchResult.isVisible();
@@ -335,5 +373,14 @@ public class SearchView extends JFrame {
     public static void msgBox(String message, String title, int messageType) {
 
         JOptionPane.showMessageDialog(null, message, title, messageType);
+    }
+
+    /**
+    * The method run initiates the application by calling the view constructor
+    ***/
+
+    public static void run() {
+
+        new SearchView();
     }
 }

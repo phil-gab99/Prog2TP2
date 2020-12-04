@@ -5,9 +5,25 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+/**
+* The class SearchControl is responsible for controlling where events triggered
+* by the user lead to the various possible actions
+*
+* @author Philippe Gabriel
+* @version 1.0 2020-12-07
+***/
+
 class SearchControl {
 
+    //Model granting access to the actions in response to user events
     private SearchModel model;
+
+    /**
+    * The constructor method SearchControl allows the link between the control
+    * and model classes for event handling
+    *
+    * @param model SearchModel granting access to methods triggered by events
+    ***/
 
     public SearchControl(SearchModel model) {
 
@@ -55,6 +71,11 @@ class SearchControl {
         }
     }
 
+    /**
+    * The class Search handles events triggered upon pressing the Search button
+    * this class listens to
+    ***/
+
     public class Search implements ActionListener {
 
         /**
@@ -69,6 +90,11 @@ class SearchControl {
             model.search(); //Method calling dialog for searches
         }
     }
+
+    /**
+    * The class OkSearch handles events triggered upon pressing the Ok button
+    * from within the search dialog
+    ***/
 
     public class OkSearch implements ActionListener {
 
@@ -87,7 +113,7 @@ class SearchControl {
 
     /**
     * The class Cancel handles the event triggered upon pressing the Cancel
-    * button this class listens to present in many dialogs
+    * button this class listens to
     ***/
 
     public class Cancel implements ActionListener {
@@ -101,13 +127,13 @@ class SearchControl {
 
         public void actionPerformed(ActionEvent e) {
 
-            model.cancel(); //Method closing current dialog
+            model.cancel(); //Method closing current dialog instance
         }
     }
 
     /**
     * The class AddWords handles the event triggered upon pressing the Add
-    * Words button this class listens to
+    * Words button from the results frame this class listens to
     ***/
 
     public class AddWords implements ActionListener {
@@ -121,9 +147,14 @@ class SearchControl {
 
         public void actionPerformed(ActionEvent e) {
 
-            model.addWords(); //Method closing current dialog
+            model.addWords(); //Method calling dialog for searches
         }
     }
+
+    /**
+    * The class Update handles the event triggered upon pressing the Ok button
+    * from within the search dialog originating from the results frame
+    ***/
 
     public class Update implements ActionListener {
 
@@ -136,7 +167,7 @@ class SearchControl {
 
         public void actionPerformed(ActionEvent e) {
 
-            model.update(); //Method closing current dialog
+            model.update(); //Method updating results list
         }
     }
 }

@@ -11,6 +11,13 @@ import documentlist.IndexationList;
 import wordlist.*;
 import tools.DocumentScore;
 
+/**
+* The class SearchModel
+*
+* @author Philippe Gabriel
+* @version 1.0 2020-mm-dd
+***/
+
 class SearchModel {
 
     // View allowing control of the user interface elements
