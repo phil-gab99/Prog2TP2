@@ -1,11 +1,15 @@
 package mvc;
 
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 import documentlist.Document;
 import documentlist.IndexationList;
 import tools.DocumentScore;
@@ -16,7 +20,7 @@ import wordlist.*;
 * triggering action events
 *
 * @author Philippe Gabriel
-* @version 1.14.5 2020-12-07
+* @version 1.16.7 2020-12-07
 ***/
 
 class SearchModel {
@@ -25,7 +29,7 @@ class SearchModel {
     private SearchView view;
 
 
-    private String query; //String holding user word query
+    private String query = ""; //String holding user word query
 
     //References to indexation list and reversed indexation list
     private IndexationList list = new IndexationList();
@@ -86,30 +90,6 @@ class SearchModel {
     }
 
     /**
-    * The method search is triggered upon pressing the Search button and
-    * initiates the generation of the search dialog
-    ***/
-
-    public void search() {
-
-        //Prevent user from undertaking action if results frame is active
-        try {
-
-            if (view.isSearchResultVisible()) {
-
-                SearchView.msgBox(
-                "Please close the current window to undertake this action.",
-                "Action Not Allowed", SearchView.ERROR);
-                return;
-            }
-        } catch(NullPointerException e) {
-            //Do nothing
-        }
-
-        view.searchWordsDialog(); //Generate search dialog
-    }
-
-    /**
     * The method updateFiles is triggered upon selecting files from the file
     * chooser dialog and updates both lists to hold the correct information
     ***/
@@ -126,45 +106,83 @@ class SearchModel {
     }
 
     /**
-    * The method OkSearch is triggered upon pressing the Ok button within the
-    * search dialog and issues the user query to display the correct resulting
-    * list
+    * The method search is triggered upon pressing the Search button and
+    * initiates the generation of the search dialog
     ***/
 
-    public void OkSearch() {
+    public void search(ActionEvent e) {
 
-        query = view.wordQuery.getText().replaceAll("[^A-z0-9]", " ").trim();
+        //Prevent user from undertaking action if results frame is active
+        try {
 
-        if (query.equals("")) { //Checking for empty query
+            if ((view.isSearchResultVisible()) &&
+            !((JFrame)(SwingUtilities
+            .getWindowAncestor((JButton)(e.getSource())))).getName()
+            .equals(view.searchResult.getName())) {
+            
+                SearchView.msgBox(
+                "Please close the results window to undertake this action.",
+                "Action Not Allowed", SearchView.ERROR);
+                return;
+            }
+        } catch(NullPointerException a) {
+            //Do nothing
+        }
 
+        view.makeDialog(); //Generate search dialog
+    }
+
+    /**
+    * The method updateWords is triggered upon pressing the Ok button within
+    * the search dialog and issues the user query to display the correct
+    * resulting list
+    ***/
+
+    public void updateWords() {
+
+        //Retrieving query
+        String data = view.wordQuery.getText().replaceAll("[^A-z0-9]", " ")
+        .trim();
+        
+        if (data.equals("")) { //Checking for empty query
+        
             SearchView.msgBox("Please enter a valid query.", "No Input",
             SearchView.ERROR);
             return;
         }
-
-        String[] words = query.split("\\s+"); //Tokenizing query
-
+        
+        //Tokenizing new combined query
+        String[] words = (query + " " + data).trim().split("\\s+");
+        
         if (hasDuplicates(words)) { //If query holds duplicate entries
-
+        
             SearchView.msgBox("Please avoid duplicate entries.", "Duplicates",
             SearchView.ERROR);
             return;
         } else {
-
-            //Retrieving result list
+        
             ArrayList<DocumentScore> searchResult = searchList(words);
             String result = "Document - Score\n";
-
+        
             if (searchResult != null) {
-
+        
                 for (DocumentScore d : searchResult) {
-
+        
                     result += "     " + d + "\n";
                 }
             }
-
+        
             cancel();
-            view.makeResultsFrame(result); //Generating results frame
+            
+            query = (query + " " + data).trim();       //Updating full query
+            
+            try {
+                
+                view.searchResultList.setText(result); //Updating results list
+            } catch(NullPointerException e) {
+                
+                view.makeResultsFrame(result);
+            }
         }
     }
 
@@ -178,63 +196,6 @@ class SearchModel {
         view.dialog.dispose();
     }
 
-    /**
-    * The method addWords is triggered upon pressing the Add Words button from
-    * within the results frame and initiates the generation of a different
-    * search dialog
-    ***/
-
-    public void addWords() {
-
-        view.addWordsDialog(); //Generating saerch dialog
-    }
-
-    /**
-    * The method updateWords updates the results frame associated list by
-    * adding in the user newly-inputted entries
-    ***/
-
-    public void updateWords() {
-
-        //Retrieving extended query
-        String extQuery = view.wordQuery.getText().
-        replaceAll("[^A-z0-9]", " ").trim();
-
-        if (extQuery.equals("")) { //Checking for empty query
-
-            SearchView.msgBox("Please enter a valid query.", "No Input",
-            SearchView.ERROR);
-            return;
-        }
-        
-        //Tokenizing new combined query
-        String[] words = (query + " " + extQuery).split("\\s+");
-
-        if (hasDuplicates(words)) { //If query holds duplicate entries
-
-            SearchView.msgBox("Please avoid duplicate entries.", "Duplicates",
-            SearchView.ERROR);
-            return;
-        } else {
-
-            ArrayList<DocumentScore> searchResult = searchList(words);
-            String result = "Document - Score\n";
-
-            if (searchResult != null) {
-
-                for (DocumentScore d : searchResult) {
-
-                    result += "     " + d + "\n";
-                }
-            }
-
-            cancel();
-            
-            query += " " + extQuery;               //Updating full query
-            view.searchResultList.setText(result); //Updating results list
-        }
-    }
-    
     /**
     * The method hasDuplicates checks if a given String array holds any
     * duplicate entries

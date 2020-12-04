@@ -134,41 +134,40 @@ public class SearchView extends JFrame {
     }
 
     /**
-    * The method searchWordsDialog generates the dialog box upon pressing the
-    * Search button within the main window
+    * The method makeDialog generates a dialog for taking user input
     ***/
 
-    public void searchWordsDialog() {
-
+    public void makeDialog() {
+        
         //Instantiating dialog and input textfield
         dialog = new JDialog(this, "Search Words", true);
         wordQuery = new JTextField();
         wordQuery.addKeyListener(control.new KeyMixed());
-
+    
         //Configuring dialog layout, size and location
         GridBagLayout gridbag = new GridBagLayout();
         GridBagConstraints c = new GridBagConstraints();
         dialog.setSize(FRAME_WIDTH/2, FRAME_HEIGHT/3);
         dialog.setLayout(gridbag);
         centerComponent(dialog, 0);
-
+    
         //Textfield and button locations
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 1.0;
-
+    
         c.gridy = 1;
         c.gridwidth = GridBagConstraints.REMAINDER;
         c.insets = new Insets(5, 20, 5, 5);
         makeLabel(dialog, "*Separate each entry with a comma", gridbag, c,
         SwingConstants.LEFT, Font.ITALIC, 12);
-
+    
         c.gridy = 2;
         c.gridwidth = 5;
         c.insets = new Insets(5, 20, 5, 5);
         makeButton(dialog, "OK", gridbag, c, 3);
         c.insets = new Insets(5, 5, 5, 20);
         makeButton(dialog, "Cancel", gridbag, c, 4);
-
+    
         c.weightx = 0.0;
         c.gridy = 0;
         c.gridwidth = 1;
@@ -179,57 +178,7 @@ public class SearchView extends JFrame {
         c.insets = new Insets(5, 5, 5, 20);
         gridbag.setConstraints(wordQuery, c);
         dialog.add(wordQuery);
-
-        dialog.setVisible(true);
-    }
-
-    /**
-    * The method addWordsDialog generates the dialog upon pressing the Add
-    * Words button from within the search results frame
-    ***/
-
-    public void addWordsDialog() {
-
-        //Instantiating dialog and input textfield
-        dialog = new JDialog(this, "Add Words", true);
-        wordQuery = new JTextField();
-        wordQuery.addKeyListener(control.new KeyMixed());
-
-        //Configuring dialog layout, size and location
-        GridBagLayout gridbag = new GridBagLayout();
-        GridBagConstraints c = new GridBagConstraints();
-        dialog.setSize(FRAME_WIDTH/2, FRAME_HEIGHT/3);
-        dialog.setLayout(gridbag);
-        centerComponent(dialog, 0);
-
-        //Textfield and button locations
-        c.fill = GridBagConstraints.BOTH;
-        c.weightx = 1.0;
-
-        c.gridy = 1;
-        c.gridwidth = GridBagConstraints.REMAINDER;
-        c.insets = new Insets(5, 20, 5, 5);
-        makeLabel(dialog, "*Separate each entry with a comma", gridbag, c,
-        SwingConstants.LEFT, Font.ITALIC, 12);
-
-        c.gridy = 2;
-        c.gridwidth = 5;
-        c.insets = new Insets(5, 20, 5, 5);
-        makeButton(dialog, "OK", gridbag, c, 6);
-        c.insets = new Insets(5, 5, 5, 20);
-        makeButton(dialog, "Cancel", gridbag, c, 4);
-
-        c.weightx = 0.0;
-        c.gridy = 0;
-        c.gridwidth = 1;
-        c.insets = new Insets(5, 20, 5, 5);
-        makeLabel(dialog, "Words: ", gridbag, c, SwingConstants.LEFT,
-        Font.PLAIN, 14);
-        c.gridwidth = GridBagConstraints.REMAINDER;
-        c.insets = new Insets(5, 5, 5, 20);
-        gridbag.setConstraints(wordQuery, c);
-        dialog.add(wordQuery);
-
+    
         dialog.setVisible(true);
     }
 
@@ -273,7 +222,7 @@ public class SearchView extends JFrame {
         //Configuring button locations
         c.weighty = 0.0;
         c.insets = new Insets(5, 20, 20, 5);
-        makeButton(searchResult, "Add Words", gridbag, c, 5);
+        makeButton(searchResult, "Add Words", gridbag, c, 2);
 
         searchResult.setVisible(true);
     }
@@ -301,10 +250,8 @@ public class SearchView extends JFrame {
 
             case 1: button.addActionListener(control.new AddFiles());    break;
             case 2: button.addActionListener(control.new Search());      break;
-            case 3: button.addActionListener(control.new OkSearch());    break;
+            case 3: button.addActionListener(control.new UpdateWords()); break;
             case 4: button.addActionListener(control.new Cancel());      break;
-            case 5: button.addActionListener(control.new AddWords());    break;
-            case 6: button.addActionListener(control.new UpdateWords()); break;
         }
 
         parent.add(button);

@@ -10,7 +10,7 @@ import java.awt.event.KeyEvent;
 * by the user lead to the various possible actions
 *
 * @author Philippe Gabriel
-* @version 1.7.3 2020-12-07
+* @version 1.7.5 2020-12-07
 ***/
 
 class SearchControl {
@@ -87,67 +87,7 @@ class SearchControl {
 
         public void actionPerformed(ActionEvent e) {
 
-            model.search(); //Method calling dialog for searches
-        }
-    }
-
-    /**
-    * The class OkSearch handles events triggered upon pressing the Ok button
-    * from within the search dialog
-    ***/
-
-    public class OkSearch implements ActionListener {
-
-        /**
-        * The method actionPerformed is triggered upon pressing the button the
-        * current instance is listening to
-        *
-        * @param e ActionEvent holding information on the press of the button
-        ***/
-
-        public void actionPerformed(ActionEvent e) {
-
-            model.OkSearch(); //Method calling frame with results
-        }
-    }
-
-    /**
-    * The class Cancel handles the event triggered upon pressing the Cancel
-    * button this class listens to
-    ***/
-
-    public class Cancel implements ActionListener {
-
-        /**
-        * The method actionPerformed is triggered upon pressing the button the
-        * current instance is listening to
-        *
-        * @param e ActionEvent holding information on the press of the button
-        ***/
-
-        public void actionPerformed(ActionEvent e) {
-
-            model.cancel(); //Method closing current dialog instance
-        }
-    }
-
-    /**
-    * The class AddWords handles the event triggered upon pressing the Add
-    * Words button from the results frame this class listens to
-    ***/
-
-    public class AddWords implements ActionListener {
-
-        /**
-        * The method actionPerformed is triggered upon pressing the button the
-        * current instance is listening to
-        *
-        * @param e ActionEvent holding information on the press of the button
-        ***/
-
-        public void actionPerformed(ActionEvent e) {
-
-            model.addWords(); //Method calling dialog for searches
+            model.search(e); //Method calling dialog for searches
         }
     }
 
@@ -168,6 +108,26 @@ class SearchControl {
         public void actionPerformed(ActionEvent e) {
 
             model.updateWords(); //Method updating results list
+        }
+    }
+    
+    /**
+    * The class Cancel handles the event triggered upon pressing the Cancel
+    * button this class listens to
+    ***/
+
+    public class Cancel implements ActionListener {
+
+        /**
+        * The method actionPerformed is triggered upon pressing the button the
+        * current instance is listening to
+        *
+        * @param e ActionEvent holding information on the press of the button
+        ***/
+
+        public void actionPerformed(ActionEvent e) {
+
+            model.cancel(); //Method closing current dialog instance
         }
     }
 }
