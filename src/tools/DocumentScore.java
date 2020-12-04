@@ -36,7 +36,7 @@ public class DocumentScore implements Comparable<DocumentScore> {
 
     public String toString() {
 
-        return "document: " + document + "\nscore: " + score;
+        return document + " - " + score;
     }
 
     /**

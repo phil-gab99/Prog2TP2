@@ -2,6 +2,7 @@ package documentlist;
 
 import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Collections;
 import tools.WordFrequency;
 
 /**
@@ -147,7 +148,8 @@ public class Document {
 
     public int score(String[] words) {
 
-        Arrays.sort(words); //Sorting the array for simpler comparison
+        //Sorting the array for simpler comparison
+        Arrays.sort(words, String.CASE_INSENSITIVE_ORDER);
 
         int sum = 0;        //Document score
         int wordIndex = 0;  //Index of provided string array

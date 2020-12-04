@@ -16,15 +16,16 @@ class SearchModel {
     // View allowing control of the user interface elements
     private SearchView view;
 
+    private String query;
     private IndexationList list = new IndexationList();
     private ReverseIndexationList listR = new ReverseIndexationList();
 
     /**
-    * The constructor method SearchModel allows the link between the model and view
-    * classes for graphical interface interactions
+    * The constructor method SearchModel allows the link between the model and
+    * view classes for graphical interface interactions
     *
     * @param view SearchView granting access to methods configuring graphical
-    *             elements
+    * elements
     ***/
 
     public SearchModel(SearchView view) {
@@ -72,8 +73,7 @@ class SearchModel {
 
     public void OkSearch() {
 
-        String query = view.wordQuery.getText().replaceAll("[^A-z0-9]", " ").
-        trim();
+        query = view.wordQuery.getText().replaceAll("[^A-z0-9]", " ").trim();
 
         if (query.equals("")) { //Checking for empty string
 
@@ -94,7 +94,19 @@ class SearchModel {
             return;
         } else {
 
-            searchList(words);
+            ArrayList<DocumentScore> searchResult = searchList(words);
+            String result = "Document - Score\n";
+
+            if (searchResult != null) {
+
+                for (DocumentScore d : searchResult) {
+
+                    result += "     " + d + "\n";
+                }
+            }
+
+            cancel();
+            view.makeResultsFrame(result);
         }
     }
 
@@ -106,6 +118,47 @@ class SearchModel {
     public void cancel() {
 
         view.dialog.dispose();
+    }
+
+    public void addWords() {
+
+        view.addWordsDialog();
+    }
+
+    public void update() {
+
+        String extQuery = query + " " +
+        view.wordQuery.getText().replaceAll("[^A-z0-9]", " ").trim();
+
+        String[] words = extQuery.split("\\s+");
+
+        if (words.length == 0) {
+
+            SearchView.msgBox("Please enter a valid query.", "No Input",
+            SearchView.ERROR);
+            return;
+        } else if (hasDuplicates(words)) {
+
+            SearchView.msgBox("Please avoid duplicate entries.", "Duplicates",
+            SearchView.ERROR);
+            return;
+        } else {
+
+            ArrayList<DocumentScore> searchResult = searchList(words);
+            String result = "Document - Score\n";
+
+            if (searchResult != null) {
+
+                for (DocumentScore d : searchResult) {
+
+                    result += "     " + d + "\n";
+                }
+            }
+
+            cancel();
+            query = extQuery;
+            view.searchResultList.setText(result);
+        }
     }
 
     private boolean hasDuplicates(String[] words) {
@@ -140,6 +193,7 @@ class SearchModel {
         Word temp;
         ArrayList<DocumentScore> result;
 
+        //Check if list is empty or if first word is not present
         if ((words.length == 0)
         || ((temp = listR.contains(words[0])) == null)) {
 
@@ -147,18 +201,24 @@ class SearchModel {
         } else {
 
             result = new ArrayList<DocumentScore>();
+
+            //Acquiring head document structure of first word appearance
             DocumentStructure node = temp.getHeadStructure();
 
             while (node != null) {
 
+                //Acquiring indexation list head document
                 Document doc = list.getHeadDocument();
 
                 while (doc != null) {
 
+                    //Compare indexation list document with document structure
                     if (doc.getName().equalsIgnoreCase(node.getDocument())) {
 
+                        //Document score calculated given list of words
                         int sum = doc.score(words);
 
+                        //Adding document to result list if has all words
                         if (sum != 0) {
 
                             result.add(new DocumentScore(doc.getName(), sum));
@@ -174,7 +234,7 @@ class SearchModel {
             }
         }
 
-        Collections.sort(result);
+        Collections.sort(result); //Sorting in descending order
         return result;
     }
 }

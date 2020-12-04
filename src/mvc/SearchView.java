@@ -37,8 +37,10 @@ public class SearchView extends JFrame {
     private SearchControl control;
 
     JDialog dialog;              //Dialog used for various user input contexts
+    JFrame searchResult;
     JTextArea indexList;
     JTextArea indexListRev;
+    JTextArea searchResultList;
     JTextField wordQuery;
 
     public SearchView() {
@@ -154,6 +156,100 @@ public class SearchView extends JFrame {
     }
 
     /**
+    * The method addWordsDialog
+    *
+    *
+    ***/
+
+    public void addWordsDialog() {
+
+        //Instantiating dialog, radio button group and details list
+        dialog = new JDialog(this, "Search Words", true);
+        wordQuery = new JTextField();
+        wordQuery.addKeyListener(control.new KeyMixed());
+
+        //Configuring dialog layout, size and location
+        GridBagLayout gridbag = new GridBagLayout();
+        GridBagConstraints c = new GridBagConstraints();
+        dialog.setSize(FRAME_WIDTH/2, FRAME_HEIGHT/3);
+        dialog.setLayout(gridbag);
+        centerComponent(dialog, 0);
+
+        //Textfield and button locations
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 1.0;
+
+        c.gridy = 1;
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.insets = new Insets(5, 20, 5, 5);
+        makeLabel(dialog, "*Separate each entry with a comma", gridbag, c,
+        SwingConstants.LEFT, Font.ITALIC, 12);
+
+        c.gridy = 2;
+        c.gridwidth = 5;
+        c.insets = new Insets(5, 20, 5, 5);
+        makeButton(dialog, "OK", gridbag, c, 6);
+        c.insets = new Insets(5, 5, 5, 20);
+        makeButton(dialog, "Cancel", gridbag, c, 4);
+
+        c.weightx = 0.0;
+        c.gridy = 0;
+        c.gridwidth = 1;
+        c.insets = new Insets(5, 20, 5, 5);
+        makeLabel(dialog, "Words: ", gridbag, c, SwingConstants.LEFT,
+        Font.PLAIN, 14);
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.insets = new Insets(5, 5, 5, 20);
+        gridbag.setConstraints(wordQuery, c);
+        dialog.add(wordQuery);
+
+        dialog.setVisible(true);
+    }
+
+    /**
+    * The method makeResultsFrame generates the frame displaying the user's
+    * search results
+    ***/
+
+    public void makeResultsFrame(String result) {
+
+        //Instantiating frame
+        searchResult = new JFrame("Search Results");
+
+        //Configuring frame layout, size and location
+        GridBagLayout gridbag = new GridBagLayout();
+        GridBagConstraints c = new GridBagConstraints();
+        searchResult.setLayout(gridbag);
+        searchResult.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+        centerComponent(searchResult, 50);
+
+        searchResultList = new JTextArea(result);
+        JScrollPane scrollRes = new JScrollPane(searchResultList);
+        JLabel headRes = new JLabel("Search Result List", JLabel.LEFT);
+        headRes.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        scrollRes.setColumnHeaderView(headRes);
+        searchResultList.setMargin(new Insets(5, 20, 5, 20));
+        searchResultList.setEditable(false);
+
+        //Layout properties configuration
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 1.0;
+        c.weighty = 1.0;
+        c.insets = new Insets(5, 20, 5, 20);
+        c.gridwidth = GridBagConstraints.REMAINDER;
+
+        gridbag.setConstraints(scrollRes, c);
+        searchResult.add(scrollRes);
+
+        //Configuring button locations
+        c.weighty = 0.0;
+        c.insets = new Insets(5, 20, 20, 5);
+        makeButton(searchResult, "Add Words", gridbag, c, 5);
+
+        searchResult.setVisible(true);
+    }
+
+    /**
     * The makeButton method creates a button to implement onto the interface
     * and assigns it a specific listener
     *
@@ -175,10 +271,11 @@ public class SearchView extends JFrame {
         switch (listenType) {
 
             case 1: button.addActionListener(control.new AddFiles()); break;
-            case 2: button.addActionListener(control.new Search()); break;
+            case 2: button.addActionListener(control.new Search());   break;
             case 3: button.addActionListener(control.new OkSearch()); break;
-            case 4: button.addActionListener(control. new Cancel()); break;
-            default: System.out.println("Lolilou");
+            case 4: button.addActionListener(control.new Cancel());   break;
+            case 5: button.addActionListener(control.new AddWords()); break;
+            case 6: button.addActionListener(control.new Update());   break;
         }
 
         parent.add(button);
@@ -193,6 +290,8 @@ public class SearchView extends JFrame {
     * @param c GridBagConstraints indicating the specific constraints and
     * location details
     * @param aligment Integer indicating the text alignment within label
+    * @param style Font constant to affect text
+    * @param size Font size of label text
     ***/
 
     public void makeLabel(Container parent, String name, GridBagLayout gridbag,

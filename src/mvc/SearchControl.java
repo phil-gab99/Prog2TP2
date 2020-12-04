@@ -104,4 +104,39 @@ class SearchControl {
             model.cancel(); //Method closing current dialog
         }
     }
+
+    /**
+    * The class AddWords handles the event triggered upon pressing the Add
+    * Words button this class listens to
+    ***/
+
+    public class AddWords implements ActionListener {
+
+        /**
+        * The method actionPerformed is triggered upon pressing the button the
+        * current instance is listening to
+        *
+        * @param e ActionEvent holding information on the press of the button
+        ***/
+
+        public void actionPerformed(ActionEvent e) {
+
+            model.addWords(); //Method closing current dialog
+        }
+    }
+
+    public class Update implements ActionListener {
+
+        /**
+        * The method actionPerformed is triggered upon pressing the button the
+        * current instance is listening to
+        *
+        * @param e ActionEvent holding information on the press of the button
+        ***/
+
+        public void actionPerformed(ActionEvent e) {
+
+            model.update(); //Method closing current dialog
+        }
+    }
 }
