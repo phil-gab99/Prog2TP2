@@ -193,7 +193,7 @@ public class SearchView extends JFrame {
     public void addWordsDialog() {
 
         //Instantiating dialog and input textfield
-        dialog = new JDialog(this, "Search Words", true);
+        dialog = new JDialog(this, "Add Words", true);
         wordQuery = new JTextField();
         wordQuery.addKeyListener(control.new KeyMixed());
 
@@ -301,12 +301,12 @@ public class SearchView extends JFrame {
 
         switch (listenType) {
 
-            case 1: button.addActionListener(control.new AddFiles()); break;
-            case 2: button.addActionListener(control.new Search());   break;
-            case 3: button.addActionListener(control.new OkSearch()); break;
-            case 4: button.addActionListener(control.new Cancel());   break;
-            case 5: button.addActionListener(control.new AddWords()); break;
-            case 6: button.addActionListener(control.new Update());   break;
+            case 1: button.addActionListener(control.new AddFiles());    break;
+            case 2: button.addActionListener(control.new Search());      break;
+            case 3: button.addActionListener(control.new OkSearch());    break;
+            case 4: button.addActionListener(control.new Cancel());      break;
+            case 5: button.addActionListener(control.new AddWords());    break;
+            case 6: button.addActionListener(control.new UpdateWords()); break;
         }
 
         parent.add(button);

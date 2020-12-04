@@ -152,11 +152,11 @@ class SearchControl {
     }
 
     /**
-    * The class Update handles the event triggered upon pressing the Ok button
-    * from within the search dialog originating from the results frame
+    * The class UpdateWords handles the event triggered upon pressing the Ok
+    * button from within the search dialog originating from the results frame
     ***/
 
-    public class Update implements ActionListener {
+    public class UpdateWords implements ActionListener {
 
         /**
         * The method actionPerformed is triggered upon pressing the button the
@@ -167,7 +167,7 @@ class SearchControl {
 
         public void actionPerformed(ActionEvent e) {
 
-            model.update(); //Method updating results list
+            model.updateWords(); //Method updating results list
         }
     }
 }
