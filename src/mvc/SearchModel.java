@@ -52,10 +52,38 @@ class SearchModel {
 
     public void addFiles() {
 
+        //Prevent user from opening random frames
+        try {
+
+            if (view.isSearchResultVisible()) {
+
+                view.msgBox(
+                "Please close the current window to undertake this action.",
+                "Action Not Allowed", view.ERROR);
+                return;
+            }
+        } catch(NullPointerException e) {
+            //Do nothing
+        }
+
         view.fileChooserDialog();
     }
 
     public void search() {
+
+        //Prevent user from opening random frames
+        try {
+
+            if (view.isSearchResultVisible()) {
+
+                view.msgBox(
+                "Please close the current window to undertake this action.",
+                "Action Not Allowed", view.ERROR);
+                return;
+            }
+        } catch(NullPointerException e) {
+            //Do nothing
+        }
 
         view.searchWordsDialog();
     }

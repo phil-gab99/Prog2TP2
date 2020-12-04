@@ -318,6 +318,11 @@ public class SearchView extends JFrame {
         (d.height - c.getHeight()) / 2 - offset);
     }
 
+    public boolean isSearchResultVisible() {
+
+        return searchResult.isVisible();
+    }
+
     /**
     * The method msgBox creates an informative pane to the user with
     * the given message as information
