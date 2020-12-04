@@ -2,7 +2,7 @@
 * The class Main begins the application
 *
 * @author Philippe Gabriel
-* @version 1.0 2020-12-07
+* @version 1.0.1 2020-12-07
 ***/
 
 public class Main {

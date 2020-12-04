@@ -5,7 +5,7 @@ package tools;
 * containing a list of specfied queries
 *
 * @author Philippe Gabriel
-* @version 1.0 2020-12-07
+* @version 1.0.4 2020-12-07
 ***/
 
 public class DocumentScore implements Comparable<DocumentScore> {

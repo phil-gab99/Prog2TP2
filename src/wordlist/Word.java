@@ -5,7 +5,7 @@ package wordlist;
 * documents and the word's frequency within it
 *
 * @author Philippe Gabriel
-* @version 1.0 2020-12-07
+* @version 1.2.9 2020-12-07
 ***/
 
 public class Word {

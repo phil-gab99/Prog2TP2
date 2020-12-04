@@ -1,6 +1,5 @@
 package mvc;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -9,7 +8,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Toolkit;
-import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -28,7 +26,7 @@ import javax.swing.border.BevelBorder;
 * is configured and offers plenty of methods for graphical elements
 *
 * @author Philippe Gabriel
-* @version 1.0 2020-12-07
+* @version 1.9.13 2020-12-07
 ***/
 
 public class SearchView extends JFrame {

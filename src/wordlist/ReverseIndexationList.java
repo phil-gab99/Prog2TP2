@@ -8,7 +8,7 @@ import tools.WordFrequency;
 * linked list of words resulting from an addition onto the indexation list
 *
 * @author Philippe Gabriel
-* @version 1.0 2020-12-07
+* @version 1.4.2 2020-12-07
 ***/
 
 public class ReverseIndexationList {

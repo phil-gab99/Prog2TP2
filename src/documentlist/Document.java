@@ -10,7 +10,7 @@ import tools.WordFrequency;
 * words and their frequency
 *
 * @author Philippe Gabriel
-* @version 1.0 2020-12-07
+* @version 1.4.6 2020-12-07
 ***/
 
 public class Document {

@@ -1,22 +1,22 @@
 package mvc;
 
 import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-import java.io.IOException;
-import java.io.File;
 import documentlist.Document;
 import documentlist.IndexationList;
-import wordlist.*;
 import tools.DocumentScore;
+import wordlist.*;
 
 /**
 * The class SearchModel gives the details of the actions to be ensued upon
 * triggering action events
 *
 * @author Philippe Gabriel
-* @version 1.0 2020-12-07
+* @version 1.14.5 2020-12-07
 ***/
 
 class SearchModel {

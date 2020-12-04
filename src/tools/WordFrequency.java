@@ -5,7 +5,7 @@ package tools;
 * appearances within some block of text
 *
 * @author Philippe Gabriel
-* @version 1.0 2020-12-07
+* @version 1.0.5 2020-12-07
 ***/
 
 public class WordFrequency {

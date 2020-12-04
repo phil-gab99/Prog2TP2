@@ -10,7 +10,7 @@ import java.util.ArrayList;
 * of each word within the text
 *
 * @author Philippe Gabriel
-* @version 1.0 2020-12-07
+* @version 1.3.7 2020-12-07
 ***/
 
 public class Tokenizer {

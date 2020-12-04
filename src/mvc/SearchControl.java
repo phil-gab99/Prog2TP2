@@ -10,7 +10,7 @@ import java.awt.event.KeyEvent;
 * by the user lead to the various possible actions
 *
 * @author Philippe Gabriel
-* @version 1.0 2020-12-07
+* @version 1.7.3 2020-12-07
 ***/
 
 class SearchControl {

@@ -5,13 +5,13 @@ package wordlist;
 * words that figure on the reversed indexation list
 *
 * @author Philippe Gabriel
-* @version 1.0 2020-12-07
+* @version 1.0.7 2020-12-07
 ***/
 
 public class DocumentStructure {
 
-    private String document;                 //Document source path of word
-    private int frequency;                   //Appearances of word in document
+    private String document; //Document source path of word
+    private int frequency;   //Appearances of word in document
 
     //Structure for the next distinct document
     private DocumentStructure nextStructure;
