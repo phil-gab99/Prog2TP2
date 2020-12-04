@@ -20,7 +20,7 @@ import wordlist.*;
 * triggering action events
 *
 * @author Philippe Gabriel
-* @version 1.16.7 2020-12-07
+* @version 1.17.7 2020-12-07
 ***/
 
 class SearchModel {
@@ -63,6 +63,16 @@ class SearchModel {
 
             e.consume();
         }
+    }
+
+    /**
+    * The method resetQuery resets the user query upon closing the results
+    * frame holding the results list
+    ***/
+
+    public void resetQuery() {
+        
+        query = "";
     }
 
     /**
@@ -161,6 +171,7 @@ class SearchModel {
             return;
         } else {
         
+            //Retrieving results list
             ArrayList<DocumentScore> searchResult = searchList(words);
             String result = "Document - Score\n";
         
@@ -178,9 +189,14 @@ class SearchModel {
             
             try {
                 
+                if (!view.isSearchResultVisible()) {
+
+                    throw new NullPointerException();
+                }
+
                 view.searchResultList.setText(result); //Updating results list
             } catch(NullPointerException e) {
-                
+
                 view.makeResultsFrame(result);
             }
         }

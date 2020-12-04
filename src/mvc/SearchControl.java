@@ -4,13 +4,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
 * The class SearchControl is responsible for controlling where events triggered
 * by the user lead to the various possible actions
 *
 * @author Philippe Gabriel
-* @version 1.7.5 2020-12-07
+* @version 1.8.5 2020-12-07
 ***/
 
 class SearchControl {
@@ -48,6 +50,26 @@ class SearchControl {
 
             //Method restricting text to numbers and letters
             model.formatMixed(e);
+        }
+    }
+
+    /**
+    * The class CloseResults handles events triggered upon closing the results
+    * frame this class listens to
+    ***/
+
+    public class CloseResults extends WindowAdapter {
+        
+        /**
+        * The method windowClosing is triggered upon closing a window which the
+        * current instance is listening to
+        *
+        * @param e WindowEvent holding information on the window closed
+        ***/
+        
+        public void windowClosing(WindowEvent e) {
+            
+            model.resetQuery();
         }
     }
 

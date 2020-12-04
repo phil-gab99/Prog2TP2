@@ -26,7 +26,7 @@ import javax.swing.border.BevelBorder;
 * is configured and offers plenty of methods for graphical elements
 *
 * @author Philippe Gabriel
-* @version 1.9.13 2020-12-07
+* @version 1.9.15 2020-12-07
 ***/
 
 public class SearchView extends JFrame {
@@ -197,7 +197,8 @@ public class SearchView extends JFrame {
         GridBagConstraints c = new GridBagConstraints();
         searchResult.setLayout(gridbag);
         searchResult.setSize(FRAME_WIDTH, FRAME_HEIGHT);
-        centerComponent(searchResult, 50);
+        searchResult.addWindowListener(control.new CloseResults());
+        centerComponent(searchResult, -200);
 
         //Instantiating and configuring results list text area
         searchResultList = new JTextArea(result);
