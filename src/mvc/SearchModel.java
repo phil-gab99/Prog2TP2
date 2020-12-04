@@ -15,12 +15,12 @@ import tools.DocumentScore;
 * The class SearchModel
 *
 * @author Philippe Gabriel
-* @version 1.0 2020-mm-dd
+* @version 1.0 2020-12-07
 ***/
 
 class SearchModel {
 
-    // View allowing control of the user interface elements
+    //View allowing control of the user interface elements
     private SearchView view;
 
     private String query;
@@ -64,9 +64,9 @@ class SearchModel {
 
             if (view.isSearchResultVisible()) {
 
-                view.msgBox(
+                SearchView.msgBox(
                 "Please close the current window to undertake this action.",
-                "Action Not Allowed", view.ERROR);
+                "Action Not Allowed", SearchView.ERROR);
                 return;
             }
         } catch(NullPointerException e) {
@@ -83,9 +83,9 @@ class SearchModel {
 
             if (view.isSearchResultVisible()) {
 
-                view.msgBox(
+                SearchView.msgBox(
                 "Please close the current window to undertake this action.",
-                "Action Not Allowed", view.ERROR);
+                "Action Not Allowed", SearchView.ERROR);
                 return;
             }
         } catch(NullPointerException e) {
