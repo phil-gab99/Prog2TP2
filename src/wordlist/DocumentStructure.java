@@ -98,8 +98,9 @@ public class DocumentStructure {
     * object to facilitate printing its contents
     *
     * @return String implementation of document structure
+    * @see java.lang.Object
     ***/
-
+    @Override
     public String toString() {
 
         return document + " - " + frequency;

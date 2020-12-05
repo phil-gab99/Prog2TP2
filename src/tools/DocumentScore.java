@@ -5,7 +5,7 @@ package tools;
 * containing a list of specfied queries
 *
 * @author Philippe Gabriel
-* @version 1.0.4 2020-12-07
+* @version 1.0.6 2020-12-07
 ***/
 
 public class DocumentScore implements Comparable<DocumentScore> {
@@ -32,8 +32,9 @@ public class DocumentScore implements Comparable<DocumentScore> {
     * object to facilitate printing its contents
     *
     * @return String implementation of document score
+    * @see java.lang.Object
     ***/
-
+    @Override
     public String toString() {
 
         return document + " - " + score;
@@ -47,7 +48,7 @@ public class DocumentScore implements Comparable<DocumentScore> {
     * @return Integer factor of comparison
     * @see java.lang.Comparable
     ***/
-
+    @Override
     public int compareTo(DocumentScore docScore) {
 
         return docScore.score - score;

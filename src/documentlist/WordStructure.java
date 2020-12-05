@@ -5,7 +5,7 @@ package documentlist;
 * documents that figure on the indexation list
 *
 * @author Philippe Gabriel
-* @version 1.1.7 2020-12-07
+* @version 1.1.8 2020-12-07
 ***/
 
 public class WordStructure {
@@ -99,8 +99,9 @@ public class WordStructure {
     * object to facilitate printing its contents
     *
     * @return String implementation of word structure
+    * @see java.lang.Object
     ***/
-
+    @Override
     public String toString() {
 
         return word + " - " + frequency;
