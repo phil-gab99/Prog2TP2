@@ -5,7 +5,7 @@ package wordlist;
 * documents and the word's frequency within it
 *
 * @author Philippe Gabriel
-* @version 1.2.9 2020-12-07
+* @version 1.2.12 2020-12-07
 ***/
 
 public class Word {
@@ -125,13 +125,14 @@ public class Word {
     * The method addDocumentStructure adds an additional document structure to
     * the current word's list of document structures
     *
-    * @param source String file path of source document
+    * @param path String for absolute file path of document
+    * @param name String for document name
     * @param frequency Integer indicating occurences of word within document
     ***/
 
-    public void addDocumentStructure(String source, int frequency) {
+    public void addDocumentStructure(String path, String name, int frequency) {
 
-        DocumentStructure temp = new DocumentStructure(source, frequency);
+        DocumentStructure temp = new DocumentStructure(path, name, frequency);
 
         if (headStructure == null) { //Checking if first document
 
@@ -164,7 +165,6 @@ public class Word {
         while (headStructure != null) {
 
             info += "     " + headStructure + "\n";
-            // System.out.println(headStructure);
             headStructure = headStructure.getNextStructure();
         }
 

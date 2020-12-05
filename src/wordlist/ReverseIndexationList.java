@@ -8,7 +8,7 @@ import tools.WordFrequency;
 * linked list of words resulting from an addition onto the indexation list
 *
 * @author Philippe Gabriel
-* @version 1.4.2 2020-12-07
+* @version 1.4.8 2020-12-07
 ***/
 
 public class ReverseIndexationList {
@@ -21,11 +21,12 @@ public class ReverseIndexationList {
     *
     * @param documentTokens ArrayList of words and their frequencies within
     * the caller document
-    * @param source Document source path
+    * @param path Document absolute path
+    * @param name Document name
     ***/
 
-    public void addWords(ArrayList<WordFrequency> documentTokens,
-    String source) {
+    public void addWords(ArrayList<WordFrequency> documentTokens, String path,
+    String name) {
 
         for (WordFrequency entry : documentTokens) {
 
@@ -34,11 +35,11 @@ public class ReverseIndexationList {
             if ((temp = contains(entry.getWord())) != null) {
 
                 //Update already existing word
-                temp.addDocumentStructure(source, entry.getFrequency());
+                temp.addDocumentStructure(path, name, entry.getFrequency());
             } else {
 
                 //Add new word onto list
-                addSorted(entry.getWord(), source, entry.getFrequency());
+                addSorted(entry.getWord(), path, name, entry.getFrequency());
             }
         }
     }
@@ -73,18 +74,20 @@ public class ReverseIndexationList {
     * list in a lexicographically sorted fashion
     *
     * @param word String label of word
-    * @param source String file path of source document
+    * @param path String for document absolute path
+    * @param name String for document name
     * @param frequency Integer indicating occurences of given word within
     * document
     ***/
 
-    public void addSorted(String word, String source, int frequency) {
+    public void addSorted(String word, String path, String name,
+    int frequency) {
 
         //Checking if the list is empty
         if (headWord == null) {
 
             headWord = new Word(
-            word, new DocumentStructure(source, frequency));
+            word, new DocumentStructure(path, name, frequency));
             return;
         }
 
@@ -92,7 +95,7 @@ public class ReverseIndexationList {
         if (headWord.getLabel().compareToIgnoreCase(word) > 0) {
 
             headWord = new Word(
-            word, headWord, new DocumentStructure(source, frequency));
+            word, headWord, new DocumentStructure(path, name, frequency));
             return;
         }
 
@@ -108,7 +111,7 @@ public class ReverseIndexationList {
 
         //Positioning new word at correct lexicographical order
         headWord.setNextWord(new Word(word, headWord.getNextWord(),
-        new DocumentStructure(source, frequency)));
+        new DocumentStructure(path, name, frequency)));
 
         //Restoring head reference from temporary variable
         headWord = node;

@@ -10,37 +10,52 @@ import tools.WordFrequency;
 * words and their frequency
 *
 * @author Philippe Gabriel
-* @version 1.4.6 2020-12-07
+* @version 1.5.9 2020-12-07
 ***/
 
 public class Document {
 
-    private String name;                 //Document file path
+    private String fullPath;             //Document file absolute path
+    private String name;                 //Document file name
     private String text;                 //Text within document
     private Document nextDocument;       //Document following the current one
     private WordStructure headStructure; //Document head structure
 
     /**
     * The constructor method Document creates a new document with the specified
-    * file path
+    * file name
     *
-    * @param name String indicating document file path
+    * @param fullPath String indicating document absolute file path
+    * @param name String indicating document file name
     ***/
 
-    public Document(String name) {
+    public Document(String fullPath, String name) {
 
+        this.fullPath = fullPath;
         this.name = name;
     }
 
     /**
-    * The getter method getName grants access to the name path of the current
-    * document
+    * The getter method getFullPath grants access to the absolute file path of
+    * the current document
     *
-    * @return name String indicating document file path
+    * @return fullPath String indicating document absolute file path
     ***/
 
-    public String getName() {
+    public String getFullPath() {
+        
+        return fullPath;
+    }
 
+    /**
+    * The getter method getName grants access to the name of the current
+    * document
+    *
+    * @return name String indicating document file name
+    ***/
+    
+    public String getName() {
+    
         return name;
     }
 
@@ -187,7 +202,8 @@ public class Document {
 
         String info = "" +
         "-----------------------------------------------------------------\n" +
-        "File name: " + name + "\n\n" +
+        "File name: " + name + "\n" +
+        "File path: " + fullPath + "\n\n" +
         "Text:\n\n" + text + "\n" +
         "word - frequency\n";
 

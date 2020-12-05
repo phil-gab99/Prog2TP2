@@ -13,7 +13,7 @@ import wordlist.ReverseIndexationList;
 * list of documents
 *
 * @author Philippe Gabriel
-* @version 1.3.5 2020-12-07
+* @version 1.3.11 2020-12-07
 ***/
 
 public class IndexationList {
@@ -47,11 +47,12 @@ public class IndexationList {
 
         if (headDocument == null) { //Checking if first document
 
-            temp = new Document(document.getName());
+            temp = new Document(document.getAbsolutePath(),
+            document.getName());
 
             headDocument = temp;
             lastDocument = temp;
-        } else if (contains(document.getName()) != null) {
+        } else if (contains(document.getAbsolutePath()) != null) {
 
             SearchView.msgBox("The file " + document.getName()
             + " has already been previously added.",
@@ -59,7 +60,8 @@ public class IndexationList {
             return;
         } else { //Appends onto list
 
-            temp = new Document(document.getName());
+            temp = new Document(document.getAbsolutePath(),
+            document.getName());
 
             lastDocument.setNextDocument(temp);
             lastDocument = lastDocument.getNextDocument();
@@ -84,23 +86,24 @@ public class IndexationList {
         temp.setWordStructure(documentTokens); //Analyzing document
 
         //Updating reversed indexation list
-        reverseList.addWords(documentTokens, temp.getName());
+        reverseList.addWords(documentTokens, temp.getFullPath(),
+        temp.getName());
     }
 
     /**
     * The method contains retrieves a document's reference according to the
-    * given name or null if the document is not within the list
+    * given path or null if the document is not within the list
     *
-    * @param name String path of the document
+    * @param path String path of the document
     ***/
 
-    public Document contains(String name) {
+    public Document contains(String path) {
 
         Document index = headDocument;
 
         while (index != null) {
 
-            if (index.getName().equalsIgnoreCase(name)) {
+            if (index.getFullPath().equalsIgnoreCase(path)) {
 
                 break;
             }

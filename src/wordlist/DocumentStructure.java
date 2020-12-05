@@ -5,12 +5,13 @@ package wordlist;
 * words that figure on the reversed indexation list
 *
 * @author Philippe Gabriel
-* @version 1.0.7 2020-12-07
+* @version 1.0.10 2020-12-07
 ***/
 
 public class DocumentStructure {
 
-    private String document; //Document source path of word
+    private String fullPath; //Document absolute file path
+    private String document; //Document name
     private int frequency;   //Appearances of word in document
 
     //Structure for the next distinct document
@@ -20,14 +21,28 @@ public class DocumentStructure {
     * The constructor method DocumentStructure pairs with each document the
     * the caller word's frequency within it
     *
+    * @param fullPath String representing document absolute path
     * @param document String representing current document source path of word
     * @param frequency Integer indicating appearances of word in document
     ***/
 
-    public DocumentStructure(String document, int frequency) {
+    public DocumentStructure(String fullPath, String document, int frequency) {
 
+        this.fullPath = fullPath;
         this.document = document;
         this.frequency = frequency;
+    }
+
+    /**
+    * The getter method getFullPath grants access to the current document's
+    * absolute file path from which the word figures
+    *
+    * @return document String representing current document absolute path
+    ***/
+
+    public String getFullPath() {
+
+        return fullPath;
     }
 
     /**

@@ -20,7 +20,7 @@ import wordlist.*;
 * triggering action events
 *
 * @author Philippe Gabriel
-* @version 1.17.7 2020-12-07
+* @version 1.17.8 2020-12-07
 ***/
 
 class SearchModel {
@@ -273,7 +273,8 @@ class SearchModel {
                 while (doc != null) {
 
                     //Compare indexation list document with document structure
-                    if (doc.getName().equalsIgnoreCase(node.getDocument())) {
+                    if (doc.getFullPath().equalsIgnoreCase
+                    (node.getFullPath())) {
 
                         //Document score calculated given list of words
                         int sum = doc.score(words);
